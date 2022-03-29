@@ -1,6 +1,7 @@
-
 import React, { Component } from 'react'
 import fileType from '../constants/fileType'
+
+import Table from './common/Table'
 
 class ChooseXLSFile extends Component {
     state = {}
@@ -16,34 +17,16 @@ class ChooseXLSFile extends Component {
         if (data[0]) {
             return (
                 <div>
-                    <h1>File type: { this.getFileTypeName(fileType) }</h1>
                     <input type="file" onChange={(e) => readExcel(e.target.files[0], fileType)}></input>
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                {Object.keys(data[0]).map((key, index) => (
-                                    <th scope="col" key={ index }>{ key }</th>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {data.map((row, index) => (
-                                <tr key={ index }>
-                                    {Object.keys(data[0]).map((key, index) => (
-                                        <th scope="col" key={ index }>{ row[key] }</th>
-                                    ))}
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    <Table title={"File type:" + this.getFileTypeName(fileType)} data={data}/>
                 </div>
             )
         }
         
         return (
             <div>
-                <h1>File type: { this.getFileTypeName(fileType) }</h1>
                 <input type="file" onChange={(e) => readExcel(e.target.files[0], fileType)}></input>
+                <h1>File type: { this.getFileTypeName(fileType) }</h1>
             </div>
         )
     }

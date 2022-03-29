@@ -4,8 +4,9 @@ import React, { Component } from 'react'
 import * as XLSX from 'xlsx'
 
 import fileType from './constants/fileType'
-import AlgorithmButton from './components/AlgorithmButton'
+
 import XLSXFileReader from './components/XLSXFileReader';
+import AlgorithmPanel from './components/AlgorithmPanel';
 
 class App extends Component {
     state = {
@@ -46,8 +47,8 @@ class App extends Component {
         let { relations, information, requiredStructure } = this.state
         return (
             <main className='container'>
-            <XLSXFileReader relations={relations} information={information} requiredStructure={requiredStructure} readExcel={this.readExcel}/>
-            <AlgorithmButton relations={relations} information={information} requiredStructure={requiredStructure} />
+                <XLSXFileReader relations={relations} information={information} requiredStructure={requiredStructure} readExcel={this.readExcel}/>
+                <AlgorithmPanel relations={relations} information={information} requiredStructure={requiredStructure} />
             </main>
         )
     }
