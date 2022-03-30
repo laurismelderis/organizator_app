@@ -2,13 +2,13 @@ const validate = (information, requiredStructure) => {
     // Calculate total capacity of structure
     let totalCapacity = 0
     requiredStructure.forEach(level => {
-        totalCapacity += level["Capacity"]
+        totalCapacity += level.capacity
     });
 
     // Calculate total people count of every node
     let totalPeopleCount = 0
     information.forEach(node => {
-        totalPeopleCount += node["People count"]
+        totalPeopleCount += node.peopleCount
     })
     
     if (totalCapacity === 0) return false
@@ -23,25 +23,25 @@ const getImportanceInformation = (information, relations) => {
     // Calculate every node total weight
     relations.forEach(relation => {
         information.forEach(node => {
-            if (relation.dept_id_from === node["id's"] || relation.dept_id_to === node["id's"]) {
-                node["totalWeight"] += relation["Weight"]
+            if (relation.dept_id_from === node.id || relation.dept_id_to === node.id) {
+                node.totalWeight += relation.weight
             }
         })
     })
     
     // Sort information
     information.sort((nodeA, nodeB) => {
-        return nodeB["totalWeight"] - nodeA["totalWeight"] ||
-            nodeB["People count"] - nodeA["People count"]
+        return nodeB.totalWeight - nodeA.totalWeight ||
+            nodeB.peopleCount - nodeA.peopleCount
     })
 
     return information
 }
 
 const isNodeCompatibleToLevel = (node, level) => {
-    const nodePeopleCount = node["People count"]
-    const levelCapacity = level["Capacity"]
-    const levelCurrentPeopleCount = level["currentPeopleCount"]
+    const nodePeopleCount = node.peopleCount
+    const levelCapacity = level.capacity
+    const levelCurrentPeopleCount = level.currentPeopleCount
     return (nodePeopleCount + levelCurrentPeopleCount) <= levelCapacity
 }
 
@@ -80,8 +80,8 @@ const sort = (importanceInformation, requiredStructure) => {
         while (unsortedNodes[0]) {
             let currentNode = unsortedNodes[0]
             if (isNodeCompatibleToLevel(currentNode, currentLevel)) {
-                currentLevel["currentPeopleCount"] += currentNode["People count"]
-                currentNode["Level"] = currentLevel["Level"]
+                currentLevel.currentPeopleCount += currentNode.peopleCount
+                currentNode.level = currentLevel.level
                 sortedNodes.push(currentNode)
                 unsortedNodes.shift()
                 currentLevel = requiredStructure[0]
