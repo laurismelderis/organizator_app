@@ -1,16 +1,19 @@
 import React, { Component } from 'react'
-import Organizer from '../services/Organizer'
+import Organizer from '../../services/Organizer'
 
-import ImportanceTable from './ImportanceTable'
-import SortedNodeTable from './SortedNodeTable'
-import NodeGraph from './NodeGraph'
-import Button from './common/Button'
+import ImportanceTable from '../RightPanel/ImportanceTable'
+import SortedNodeTable from '../RightPanel/SortedNodeTable'
+import NodeGraph from '../LeftPanel/NodeGraph'
+import Button from '../common/Button'
 
 class AlgorithmPanel extends Component {
     state = {
         importanceTableInformation: [],
         sortedNodeTableInformation: [],
-        colors: ['#FF0000', '#FF007F', '#FFC27F'],
+        colors: ['#FF0000', '#FF8000', '#FFFF00',
+                 '#80FF00', '#00FF00', '#00FFFF',
+                 '#0080FF', '#0000FF', '#7F00FF',
+                 '#FF00FF', '#FF007F', '#808080'],
         nodes: [],
         edges: []
 
@@ -37,7 +40,8 @@ class AlgorithmPanel extends Component {
                 nodes.push({ 
                     id: currentNode.id,
                     label: currentNode.id,
-                    color: this.state.colors[currentNode.level - 1]
+                    color: this.state.colors[currentNode.level - 1],
+                    level: currentNode.level
                 })
             })
             this.setState({ nodes })
@@ -51,7 +55,7 @@ class AlgorithmPanel extends Component {
                 edges.push({
                     from: relation.dept_id_from,
                     to: relation.dept_id_to,
-                    label: relation.weight
+                    label: relation.weight.toString()
                 })
             })
             this.setState({ edges })

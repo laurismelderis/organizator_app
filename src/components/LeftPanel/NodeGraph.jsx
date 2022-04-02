@@ -4,7 +4,8 @@ import Graph from "react-graph-vis"
 
 const options = {
     layout: {
-      hierarchical: false
+      hierarchical: true,
+      improvedLayout: true
     },
     edges: {
       color: "#000000",
@@ -23,8 +24,7 @@ class NodeGraph extends Component {
         const { graph } = this.state
         return (
             <React.Fragment>
-                <h1>React graph vis</h1>
-                <Graph graph={ graph } options={options} style={{ height: "640px" }} />
+                <Graph graph={ graph } options={options} style={{ height: "100vh" }} />
             </React.Fragment>
         )
     }

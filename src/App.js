@@ -4,18 +4,20 @@ import React, { Component } from 'react'
 import * as XLSX from 'xlsx'
 
 import fileType from './constants/fileType'
-
-import XLSXFileReader from './components/XLSXFileReader';
-import AlgorithmPanel from './components/AlgorithmPanel';
+import NavBar from './components/NavBar/NavBar'
+import LeftPanel from './components/LeftPanel/LeftPanel';
+import RightPanel from './components/RightPanel/RightPanel';
 
 class App extends Component {
     state = {
         relations: [],
         information: [],
         requiredStructure: [],
+        nodes: [],
+        edges: []
     }
 
-    readExcel = (file, p_fileType) => {
+    chooseFile = (file, p_fileType) => {
         const promise = new Promise((resolve, reject) => {
             const fileReader = new FileReader()
             fileReader.readAsArrayBuffer(file)
@@ -46,10 +48,17 @@ class App extends Component {
     render() {
         let { relations, information, requiredStructure } = this.state
         return (
-            <main className='container'>
-                <XLSXFileReader relations={relations} information={information} requiredStructure={requiredStructure} readExcel={this.readExcel}/>
-                <AlgorithmPanel relations={relations} information={information} requiredStructure={requiredStructure} />
-            </main>
+            <React.Fragment>
+                <div className="container">
+                    <NavBar />
+                    <div className="leftPanel">
+                        <LeftPanel />
+                    </div>
+                    <div className="rightPanel">
+                        <RightPanel relations={relations} information={information} requiredStructure={requiredStructure} onChooseFile={this.chooseFile}/>
+                    </div>
+                </div>
+            </React.Fragment>
         )
     }
 }

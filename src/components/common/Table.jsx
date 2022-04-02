@@ -1,10 +1,9 @@
 import React from 'react'
 
 const Table = (props) => {
-    const { title, data} = props
+    const { data} = props
     return (
         <React.Fragment>
-            <h1>{title}</h1>
             <table className="table">
                 <thead>
                     <tr>
