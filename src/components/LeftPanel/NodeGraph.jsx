@@ -9,7 +9,8 @@ const options = {
     },
     edges: {
       color: "#000000",
-    }
+    },
+
 }
 
 class NodeGraph extends Component {
@@ -24,7 +25,7 @@ class NodeGraph extends Component {
         const { graph } = this.state
         return (
             <React.Fragment>
-                <Graph graph={ graph } options={options} style={{ height: "100vh" }} />
+                <Graph graph={ graph } options={Object.assign({noUseVariable: this.props.width}, options)} style={{ height: "100vh" }} />
             </React.Fragment>
         )
     }

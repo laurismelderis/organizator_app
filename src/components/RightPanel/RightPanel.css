@@ -1,0 +1,21 @@
+.right-container {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+.right-upper-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 350px 30px 50px 120px;
+
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    gap: 5px;
+    
+    box-sizing: border-box;
+}
+
+.right-upper-container>* {
+    border: 1px solid black;
+}

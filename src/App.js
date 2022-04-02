@@ -14,7 +14,14 @@ class App extends Component {
         information: [],
         requiredStructure: [],
         nodes: [],
-        edges: []
+        edges: [],
+        windowWidth: window.innerWidth
+    }
+
+    componentDidMount() {
+        window.onresize = () => {
+            this.setState({ windowWidth: window.innerWidth })
+        }     
     }
 
     chooseFile = (file, p_fileType) => {
@@ -49,10 +56,10 @@ class App extends Component {
         let { relations, information, requiredStructure } = this.state
         return (
             <React.Fragment>
-                <div className="container">
-                    <NavBar />
+                <NavBar />
+                <div className="main-container">
                     <div className="leftPanel">
-                        <LeftPanel />
+                        <LeftPanel width={this.state.windowWidth}/>
                     </div>
                     <div className="rightPanel">
                         <RightPanel relations={relations} information={information} requiredStructure={requiredStructure} onChooseFile={this.chooseFile}/>

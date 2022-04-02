@@ -4,25 +4,15 @@ body, html {
     margin: 0;
 }
 
-.container {
-    width: 100vw;
-    height: 100vh;
-    background-color: aqua;
+.main-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
 }
 
 .leftPanel {
-    width: 70%;
-    height: 100%;
-    float: left;
     background-color: rgb(180, 180, 180);
-    border-collapse: collapse;
 }
 
 .rightPanel {
-    width: 30%;
-    height: 100%;
-    float: right;
-    position: relative;
     background-color: gray;
-    border-collapse: collapse;
 }
