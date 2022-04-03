@@ -5,7 +5,36 @@ body {
 }
 
 * {
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato', sans-serif;
     box-sizing: border-box;
+}
+
+button {
+    width: 90%;
+    height: 80%;
+    background-color: white;
+    border-radius: 0.2em;
+    border: none;
+    margin: auto;
+    padding: auto;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.8em;
+    cursor: pointer;
+}
+
+h1 {
+    font-size: 1.6em;
+    margin: 0;
+    margin-bottom: 0.1em;
+}
+
+h2 {
+    font-size: 1.3em;
+    margin: 0;
+    margin-bottom: 0.1em;
 }
 
 .main-container {
@@ -17,7 +46,7 @@ body {
     background-color: rgb(180, 180, 180);
 
     position: relative;
-    height: calc(100vh - 2.875em);
+    height: calc(100vh - 3em);
 }
 
 .leftPanel>div {
