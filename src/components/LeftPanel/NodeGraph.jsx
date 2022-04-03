@@ -25,7 +25,11 @@ class NodeGraph extends Component {
         const { graph } = this.state
         return (
             <React.Fragment>
-                <Graph graph={ graph } options={Object.assign({noUseVariable: this.props.width}, options)} style={{ height: "100vh" }} />
+                <Graph 
+                    graph={ graph }
+                    options={Object.assign({autoResize: Boolean(this.props.width)}, options)}
+                    style={ {} }
+                />
             </React.Fragment>
         )
     }

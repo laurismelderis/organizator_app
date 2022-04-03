@@ -10,27 +10,21 @@ function SideBar(props) {
     return (
         <div className='right-container'>
             <div className='right-upper-container'>
-                {/* <div className='file-choose'> */}
-                    <ChooseXLSFile
-                        onChooseFile={onChooseFile}
-                        data={relations}
-                        fileType={fileType.NODES}
-                    />
-                {/* </div> */}
-                {/* <div className='file-choose'> */}
-                    <ChooseXLSFile 
-                        onChooseFile={onChooseFile}
-                        data={information}
-                        fileType={fileType.NODE_INFORMATION}
-                    />
-                {/* </div> */}
-                {/* <div className='file-choose'> */}
-                    <ChooseXLSFile
-                        onChooseFile={onChooseFile}
-                        data={requiredStructure}
-                        fileType={fileType.NODE_STRUCTURE_REQUIREMENTS}
-                    />
-                {/* </div> */}
+                <ChooseXLSFile
+                    onChooseFile={onChooseFile}
+                    data={relations}
+                    fileType={fileType.NODES}
+                />
+                <ChooseXLSFile 
+                    onChooseFile={onChooseFile}
+                    data={information}
+                    fileType={fileType.NODE_INFORMATION}
+                />
+                <ChooseXLSFile
+                    onChooseFile={onChooseFile}
+                    data={requiredStructure}
+                    fileType={fileType.NODE_STRUCTURE_REQUIREMENTS}
+                />
                 <div></div>
                 <div></div>
                 <div></div>
@@ -41,6 +35,11 @@ function SideBar(props) {
                 <div></div>
                 <div></div>
                 <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div className='right-lower-container'>
+                <div className='right-lower-title'></div>
                 <div></div>
                 <div></div>
             </div>

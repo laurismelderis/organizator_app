@@ -1,7 +1,11 @@
-body, html {
+body {
     width: 100%;
     height: 100%;
     margin: 0;
+}
+
+* {
+    box-sizing: border-box;
 }
 
 .main-container {
@@ -11,8 +15,20 @@ body, html {
 
 .leftPanel {
     background-color: rgb(180, 180, 180);
+
+    position: relative;
+    height: calc(100vh - 2.875em);
+}
+
+.leftPanel>div {
+    height: 100%;
 }
 
 .rightPanel {
     background-color: gray;
+    
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+    justify-content: stretch; 
 }
