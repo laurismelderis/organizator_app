@@ -4,7 +4,7 @@ import { setOptimizedGraph, setHierarchicalGraph } from '../../state/actions.js'
 
 function RadioGroup() {
     const isOptimized = useSelector((state) => state.optimizedGraph)
-    const isHierarchical = useSelector((state) => state.hierarhicalGraph)
+    const isHierarchical = useSelector((state) => state.hierarchicalGraph)
     const dispatch = useDispatch()
 
     const setOptimized = useCallback((event) => {
@@ -13,7 +13,6 @@ function RadioGroup() {
     const setHierarchical = useCallback((event) => {
         dispatch(setHierarchicalGraph(event.target.checked))
     }, [dispatch]);
-
     return (
         <div>
             <label className="input-group">

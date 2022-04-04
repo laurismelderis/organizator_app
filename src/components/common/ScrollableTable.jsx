@@ -5,6 +5,7 @@ import "./ScrollableTable.css"
 function ScrollableTable(props) {
     const { headings, body } = props
     const classes = ['scrollable-table'].concat((props.className || '').split(' '));
+
     return (
         <table className={classes.join(' ')}>
             <thead>
@@ -15,163 +16,13 @@ function ScrollableTable(props) {
                 </tr>
             </thead>
             <tbody>
-                {/* {body.map(row => (
-                    <tr>
-                        {row.map(item => (
-                            <td>{item}</td>
+                {body.map((row, rIndex) => (
+                    <tr key={rIndex}>
+                        {Object.values(row).map((item, iIndex) => (
+                            <td key={rIndex+iIndex}>{item}</td>
                         ))}
                     </tr>
-                ))} */}
-                <tr>
-                    <td>d_1</td>
-                    <td>d_2</td>
-                    <td>5</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <td>d_1</td>
-                    <td>d_2</td>
-                    <td>5</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <td>d_1</td>
-                    <td>d_2</td>
-                    <td>5</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <td>d_1</td>
-                    <td>d_2</td>
-                    <td>5</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <td>d_1</td>
-                    <td>d_2</td>
-                    <td>5</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <td>d_1</td>
-                    <td>d_2</td>
-                    <td>5</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <td>d_1</td>
-                    <td>d_2</td>
-                    <td>5</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <td>d_1</td>
-                    <td>d_2</td>
-                    <td>5</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <td>d_1</td>
-                    <td>d_2</td>
-                    <td>5</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <td>d_1</td>
-                    <td>d_2</td>
-                    <td>5</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <td>d_1</td>
-                    <td>d_2</td>
-                    <td>5</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <td>d_1</td>
-                    <td>d_2</td>
-                    <td>5</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <td>d_1</td>
-                    <td>d_2</td>
-                    <td>5</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <td>d_1</td>
-                    <td>d_2</td>
-                    <td>5</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <td>d_1</td>
-                    <td>d_2</td>
-                    <td>5</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <td>d_1</td>
-                    <td>d_2</td>
-                    <td>5</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <td>d_1</td>
-                    <td>d_2</td>
-                    <td>5</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <td>d_1</td>
-                    <td>d_2</td>
-                    <td>5</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <td>d_1</td>
-                    <td>d_2</td>
-                    <td>5</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <td>d_1</td>
-                    <td>d_2</td>
-                    <td>5</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <td>d_1</td>
-                    <td>d_2</td>
-                    <td>5</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <td>d_1</td>
-                    <td>d_2</td>
-                    <td>5</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <td>d_1</td>
-                    <td>d_2</td>
-                    <td>5</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <td>d_1</td>
-                    <td>d_2</td>
-                    <td>5</td>
-                    <td>X</td>
-                </tr>
-                <tr>
-                    <td>d_1</td>
-                    <td>d_2</td>
-                    <td>5</td>
-                    <td>X</td>
-                </tr>
+                ))}
             </tbody>
         </table>
     )

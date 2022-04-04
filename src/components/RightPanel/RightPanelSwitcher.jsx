@@ -1,6 +1,5 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { graphNodeUnselected } from '../../state/actions'
 
 import DataEntryPanel from './DataEntryPanel'
 import NodeRelationsPanel from './NodeRelationsPanel'

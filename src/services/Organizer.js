@@ -16,26 +16,28 @@ const validate = (information, requiredStructure) => {
     return totalCapacity >= totalPeopleCount
 }
 
-const getImportanceInformation = (information, relations) => {
+const getImportanceTable = (nodes, relations) => {
+    const importanceTable = []
+
     // Initialize total weight value
-    information.forEach(node => node["totalWeight"] = 0)
+    nodes.forEach(node => importanceTable.push({...node, totalWeight: 0}))
     
     // Calculate every node total weight
     relations.forEach(relation => {
-        information.forEach(node => {
+        importanceTable.forEach(node => {
             if (relation.dept_id_from === node.id || relation.dept_id_to === node.id) {
                 node.totalWeight += relation.weight
             }
         })
     })
     
-    // Sort information
-    information.sort((nodeA, nodeB) => {
+    // Sort importanceTable
+    importanceTable.sort((nodeA, nodeB) => {
         return nodeB.totalWeight - nodeA.totalWeight ||
             nodeB.peopleCount - nodeA.peopleCount
     })
 
-    return information
+    return importanceTable
 }
 
 const isNodeCompatibleToLevel = (node, level) => {
@@ -62,17 +64,18 @@ const sortRequiredStructure = (structure) => {
     return sortedStructure
 }
 
-const sort = (importanceInformation, requiredStructure) => {
-    // Validate whether current structure is compatible
-    // with the node information
+const sort = (importanceInformation, p_requiredStructure) => {
     let unsortedNodes = []
     for (let i = 0; i < importanceInformation.length; i++) {
         unsortedNodes.push(importanceInformation[i])
     }
-    if (validate(importanceInformation, requiredStructure)) {
-        let sortedNodes = []
 
-        requiredStructure.forEach(level => level["currentPeopleCount"] = 0)
+    // Validate whether current structure is compatible
+    // with the node information
+    if (validate(importanceInformation, p_requiredStructure)) {
+        let sortedNodes = []
+        let requiredStructure = []
+        p_requiredStructure.forEach(level => requiredStructure.push({ ...level, currentPeopleCount: 0}))
         requiredStructure = sortRequiredStructure(requiredStructure)
 
         let currentLevel = requiredStructure[0]
@@ -96,9 +99,19 @@ const sort = (importanceInformation, requiredStructure) => {
     return []
 }
 
+const getColor = (level) => {
+    const colors = ['#FF0000', '#FF8000', '#FFFF00',
+                    '#80FF00', '#00FF00', '#00FFFF',
+                    '#0080FF', '#0000FF', '#7F00FF',
+                    '#FF00FF', '#FF007F', '#808080']
+
+    return colors[level] || '#FFFFFF'
+}
+
 const Organizer = {
-    getImportanceInformation,
-    sort
+    getImportanceTable,
+    sort,
+    getColor
 }
 
 export default Organizer

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ERROR_CODE, getErrorCode } from '../../constants/errorCodes'
+import { getErrorCode } from '../../constants/errorCodes'
 
 function ErrorMsg(props) {
     const { errorCode } = props

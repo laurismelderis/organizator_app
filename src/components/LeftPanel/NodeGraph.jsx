@@ -1,5 +1,5 @@
 import React, { useMemo } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import Graph from "react-graph-vis"
 
 import { graphNodeSelected, graphNodeUnselected } from "../../state/actions"
@@ -20,40 +20,22 @@ export default function NodeGraph(props) {
     let events = useMemo(() => {
         return {
             click: (event) => {
+                console.log(event)
                 if (('nodes' in event) && event.nodes.length > 0) {
                     dispatch(graphNodeSelected(event.nodes[0]));
                 }
             },
         };
     }, [dispatch]);
+
+    const graphNodes = useSelector(state => state.graphNodes)
+    const graphEdges = useSelector(state => state.graphEdges)
+    const hierarchicalGraph = useSelector(state => state.hierarchicalGraph)
+
     return <Graph
-        graph={{ nodes: props.nodes, edges: props.edges }}
-        options={defaultOptions}
+        graph={{ nodes: graphNodes, edges: graphEdges }}
+        options={{...defaultOptions, layout: { hierarchical: hierarchicalGraph }}}
         events={events}
         _dummyWidth={props.width}
     />
 }
-
-// class NodeGraph extends Component {
-//     state = {
-//         graph: {
-//             nodes: this.props.nodes,
-//             edges: this.props.edges
-//         }
-//     }
-
-//     render() {
-//         const { graph } = this.state
-//         return (
-//             <React.Fragment>
-//                 <Graph 
-//                     graph={ graph }
-//                     options={Object.assign({autoResize: Boolean(this.props.width)}, options)}
-//                     style={ {} }
-//                 />
-//             </React.Fragment>
-//         )
-//     }
-// }
-
-// export default NodeGraph
