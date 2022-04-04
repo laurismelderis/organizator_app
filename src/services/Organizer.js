@@ -17,6 +17,8 @@ const validate = (information, requiredStructure) => {
 }
 
 const getImportanceTable = (nodes, relations) => {
+    console.log(nodes)
+    console.log(relations)
     const importanceTable = []
 
     // Initialize total weight value
@@ -48,6 +50,7 @@ const isNodeCompatibleToLevel = (node, level) => {
 }
 
 const sortRequiredStructure = (structure) => {
+    console.log(structure)
     const TOTAL_LEVEL_COUNT = structure.length
     let currentPoint = Math.round(TOTAL_LEVEL_COUNT/2)
     let sortedStructure = []
@@ -65,9 +68,10 @@ const sortRequiredStructure = (structure) => {
 }
 
 const sort = (importanceInformation, p_requiredStructure) => {
+    let nodes = []
     let unsortedNodes = []
     for (let i = 0; i < importanceInformation.length; i++) {
-        unsortedNodes.push(importanceInformation[i])
+        nodes.push(importanceInformation[i])
     }
 
     // Validate whether current structure is compatible
@@ -80,21 +84,29 @@ const sort = (importanceInformation, p_requiredStructure) => {
 
         let currentLevel = requiredStructure[0]
         let inc = 1
-        while (unsortedNodes[0]) {
-            let currentNode = unsortedNodes[0]
+        let incLimit = requiredStructure.length
+        while (nodes[0]) {
+            let currentNode = nodes[0]
+            // console.log(currentNode, currentLevel, inc, incLimit)
             if (isNodeCompatibleToLevel(currentNode, currentLevel)) {
                 currentLevel.currentPeopleCount += currentNode.peopleCount
                 currentNode.level = currentLevel.level
                 sortedNodes.push(currentNode)
-                unsortedNodes.shift()
+                nodes.shift()
                 currentLevel = requiredStructure[0]
                 inc = 1
             } else {
                 currentLevel = requiredStructure[inc]
                 inc++
+                if (inc > incLimit) {
+                    unsortedNodes.push(currentNode)
+                    nodes.shift()
+                    currentLevel = requiredStructure[0]
+                    inc = 1
+                }
             }
         }
-        return sortedNodes
+        return { sortedNodes, unsortedNodes}
     }
     return []
 }

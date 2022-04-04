@@ -6,7 +6,7 @@ import { mergeClassNames } from '../../utils'
 import FileType from '../../constants/fileType'
 import Organizer from '../../services/Organizer'
 
-import { setGraphEdges, setGraphNodes, setOverlayPanelVisible } from '../../state/actions'
+import { setGraphEdges, setGraphNodes, setNodes, setOverlayPanelVisible } from '../../state/actions'
 
 import "./DataEntryPanel.css"
 import DataEntryColumn from './DataEntryColumn'
@@ -35,14 +35,25 @@ export default function DataEntryPanel(props) {
             const importanceTable = Organizer.getImportanceTable(nodes, relations)
             const sortedNodeTable = Organizer.sort(importanceTable, requiredStructure)
 
+            // Update nodes levels
+            let newNodes = []
+            sortedNodeTable.sortedNodes.forEach(node => 
+                newNodes.push({
+                    id: node.id,
+                    peopleCount: node.peopleCount,
+                    level: node.level,
+                })
+            )
+            dispatch(setNodes(newNodes))
+
             // Set graph nodes
             let graphNodes = []
-            sortedNodeTable.forEach(currentNode => {
+            sortedNodeTable.sortedNodes.forEach(currentNode => {
                 graphNodes.push({ 
                     id: currentNode.id,
                     label: currentNode.id,
                     color: Organizer.getColor(currentNode.level),
-                    level: currentNode.level
+                    level: currentNode.level,
                 })
             })
             dispatch(setGraphNodes(graphNodes))
@@ -51,15 +62,22 @@ export default function DataEntryPanel(props) {
             let graphEdges = []
             relations.forEach(relation => {
                 graphEdges.push({
+                    smooth: {
+                        enabled: true,
+                        type: "dynamic",
+                        roundness: 1,
+                    },
                     from: relation.dept_id_from,
                     to: relation.dept_id_to,
-                    label: relation.weight.toString()
+                    label: relation.weight.toString(),
+                    color: graphNodes.find(node => node.label === relation.dept_id_from).color
                 })
             })
             dispatch(setGraphEdges(graphEdges))
             showOverlay()
         }
     }
+
     return (
         <div className={className}>
             <div className="data-entry-columns">
