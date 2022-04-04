@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
-import fileType from '../../constants/fileType'
+import FileType from '../../constants/fileType'
 
 import Table from '../common/Table'
+
+import './ChooseXLSFile.css'
 
 class ChooseXLSFile extends Component {
     state = {}
@@ -12,25 +14,18 @@ class ChooseXLSFile extends Component {
     }
 
     getFileTypeName(type) {
-        if (type === fileType.NODES) return "Nodes"
-        if (type === fileType.NODE_INFORMATION) return "Node information"
-        if (type === fileType.NODE_STRUCTURE_REQUIREMENTS) return "Node structure requirements"
+        if (type === FileType.NODES) return "Nodes"
+        if (type === FileType.NODE_INFORMATION) return "Node information"
+        if (type === FileType.NODE_STRUCTURE_REQUIREMENTS) return "Node structure requirements"
     }
 
     render() {
         const { fileType, onChooseFile, data } = this.props
-        if (data[0]) {
-            return (
-                <React.Fragment>
-                    <input type="file" onChange={(e) => onChooseFile(e.target.files[0], fileType)}></input>
-                    <Table data={data}/>
-                </React.Fragment>
-            )
-        }
         
         return (
-            <React.Fragment>
+            <div className={this.props.className || undefined}>
                 <button
+                    className="choose-file-btn"
                     onClick={this.uploadFile.bind(this)}
                 >
                     Izvēlies struktūrvienību failu
@@ -41,7 +36,7 @@ class ChooseXLSFile extends Component {
                     type="file"
                     onChange={(e) => onChooseFile(e.target.files[0], fileType).bind(this)}
                 />
-            </React.Fragment>
+            </div>
         )
     }
 }

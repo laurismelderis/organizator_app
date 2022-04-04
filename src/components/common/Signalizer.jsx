@@ -12,7 +12,7 @@ function Signalizer(props) {
             textAlign: "center",
             fontWeight: "600",
             width: "100%"
-            }}>
+            }} className={props.className || undefined}>
             {text}
         </div>
     )

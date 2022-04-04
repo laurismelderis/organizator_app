@@ -1,7 +1,16 @@
-const fileType = {
+const FileType = {
     NODES: 0,
     NODE_INFORMATION: 1,
-    NODE_STRUCTURE_REQUIREMENTS: 2
+    NODE_STRUCTURE_REQUIREMENTS: 2,
 }
 
-export default fileType
+export default FileType
+
+export function nameForType(type) {
+    switch (type) {
+        case FileType.NODES: return "Attiecības"
+        case FileType.NODE_INFORMATION: return "Struktūrvienības"
+        case FileType.NODE_STRUCTURE_REQUIREMENTS: return "Struktūra"
+        default: throw new Error(`Invalid type: ${type}`)
+    }
+}

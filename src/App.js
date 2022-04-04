@@ -1,12 +1,15 @@
 import './App.css';
 import React, { Component } from 'react'
+import { Provider } from 'react-redux'
 
 import * as XLSX from 'xlsx'
 
-import fileType from './constants/fileType'
+import FileType from './constants/fileType'
 import NavBar from './components/NavBar/NavBar'
 import LeftPanel from './components/LeftPanel/LeftPanel';
-import RightPanel from './components/RightPanel/RightPanel';
+import OverlayPanel from './components/LeftPanel/OverlayPanel';
+import RightPanelSwitcher from './components/RightPanel/RightPanelSwitcher';
+import store from './state/state.js';
 
 class App extends Component {
     state = {
@@ -46,26 +49,31 @@ class App extends Component {
         })
 
         promise.then((data) => {
-            if (p_fileType === fileType.NODES) this.setState({ relations: data })
-            if (p_fileType === fileType.NODE_INFORMATION) this.setState({ information: data })
-            if (p_fileType === fileType.NODE_STRUCTURE_REQUIREMENTS) this.setState({ requiredStructure: data })
+            if (p_fileType === FileType.NODES) this.setState({ relations: data })
+            if (p_fileType === FileType.NODE_INFORMATION) this.setState({ information: data })
+            if (p_fileType === FileType.NODE_STRUCTURE_REQUIREMENTS) this.setState({ requiredStructure: data })
         })
     }
 
     render() {
         let { relations, information, requiredStructure } = this.state
         return (
-            <React.Fragment>
+            <Provider store={store}>
                 <NavBar />
                 <div className="main-container">
-                    <div className="leftPanel">
+                    <div className="left-panel">
                         <LeftPanel width={this.state.windowWidth}/>
+                        <OverlayPanel />
                     </div>
-                    <div className="rightPanel">
-                        <RightPanel relations={relations} information={information} requiredStructure={requiredStructure} onChooseFile={this.chooseFile}/>
-                    </div>
+                    <RightPanelSwitcher
+                        className="main-container_right"
+                        relations={relations}
+                        information={information}
+                        requiredStructure={requiredStructure}
+                        onChooseFile={this.chooseFile}
+                    />
                 </div>
-            </React.Fragment>
+            </Provider>
         )
     }
 }

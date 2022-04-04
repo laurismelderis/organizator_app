@@ -12,13 +12,16 @@ body {
 }
 
 button {
-    width: 90%;
-    height: 80%;
+    /* width: 90%;
+    height: 80%; */
     background-color: white;
     border-radius: 0.2em;
     border: none;
     margin: auto;
-    padding: auto;
+    padding: 0.25em;
+    background: linear-gradient(to bottom, rgb(60, 161, 228), rgb(37, 131, 194));
+    border-radius: 0.25em;
+    color: white;
     text-align: center;
     font-weight: 600;
     font-size: 0.8em;
@@ -26,7 +29,7 @@ button {
 }
 
 h1 {
-    font-size: 1.6em;
+    font-size: 1.7em;
     margin: 0;
     margin-bottom: 0.1em;
 }
@@ -37,27 +40,59 @@ h2 {
     margin-bottom: 0.1em;
 }
 
-.main-container {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
+.input-group {
+    display: block;
 }
 
-.leftPanel {
-    background-color: rgb(180, 180, 180);
+.main-container {
+    display: flex;
+    flex-flow: row nowrap;
+}
 
+.left-panel {
+    background-color: rgb(180, 180, 180);
     position: relative;
+    flex-grow: 4;
+    flex-basis: 62.5%;
     height: calc(100vh - 3em);
 }
 
-.leftPanel>div {
+.left-panel>div {
     height: 100%;
 }
 
-.rightPanel {
+.overlay-panel {
+    position: absolute;
+    z-index: 1;
+    width: 20%;
+    padding: 1em;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-flow: column nowrap;
+    transition: right 0.5s ease-in-out;
+}
+.overlay-panel--hidden {
+    right: -30%;
+}
+
+.overlay-panel > div {
+    background-color: red;
+    flex-grow: 1;
+}
+
+.main-container_right {
     background-color: gray;
+    z-index: 3;
     
     display: flex;
     flex-flow: column nowrap;
     align-items: stretch;
-    justify-content: stretch; 
+    justify-content: stretch;
+
+    flex-grow: 3;
+    flex-basis: 37.5%;
+
+    height: calc(100vh - 3em);
+    overflow-y: auto;
 }
