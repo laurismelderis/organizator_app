@@ -1,10 +1,11 @@
 import React, { useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 // import { mergeClassNames } from '../../utils'
-import { graphNodeUnselected } from '../../state/actions'
+import { graphNodeUnselected, setRelations } from '../../state/actions'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRemove, faPencil } from '@fortawesome/free-solid-svg-icons'
+import _, { cloneDeep } from 'lodash'
 
 export default function NodeRelationsPanel(props) {
     const dispatch = useDispatch();
@@ -12,15 +13,33 @@ export default function NodeRelationsPanel(props) {
         dispatch(graphNodeUnselected());
     }, [dispatch]);
 
-    // let nodeName = "Nosaukums";
-
-    // let className = mergeClassNames(props.className, "node-relations");
-
     const nodeId = useSelector(state => state.selectedGraphNodeId)
     const nodes = useSelector(state => state.nodes)
 
     const peopleCount = nodes.find(node => node.id === nodeId).peopleCount
     const level = nodes.find(node => node.id === nodeId).level
+
+    const relations = useSelector(state => state.relations)
+    const nodeRelations = relations.filter(relation => relation.dept_id_from === nodeId)
+
+    const handleAddNode = () => {
+        const newRelations = cloneDeep(relations)
+        newRelations.push({dept_id_from: nodeId, dept_id_to: "", weight: ""})
+        dispatch(setRelations(newRelations))
+    }
+
+    const handleChangeNode = () => {
+
+    }
+
+    const handleDeleteNode = (nodeRelation) => {
+        const updatedRelations = cloneDeep(relations)
+        _.remove(updatedRelations, {
+            dept_id_from: nodeRelation.dept_id_from,
+            dept_id_to: nodeRelation.dept_id_to,
+        })
+        dispatch(setRelations(updatedRelations))
+    }
 
     return <div className={props.className}>
         <button onClick={goBack}
@@ -36,7 +55,6 @@ export default function NodeRelationsPanel(props) {
         <table>
             <thead>
                 <tr>
-                    <th>Saite no</th>
                     <th>Saite uz</th>
                     <th>Svars</th>
                     <th></th>
@@ -44,37 +62,29 @@ export default function NodeRelationsPanel(props) {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><input type="text" readOnly={true} value="d_1" /></td>
-                    <td><input type="text" readOnly={true} value="d_2" /></td>
-                    <td><input type="text" readOnly={true} value="5" /></td>
-                    <td>
-                        <button style={{background: "blue"}}>
-                            <FontAwesomeIcon icon={faPencil} />
-                        </button>
-                    </td>
-                    <td>
-                        <button style={{background: "red"}}>
-                            <FontAwesomeIcon icon={faRemove} />
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>d_2</td>
-                    <td>d_3</td>
-                    <td>3</td>
-                    <td>
-                        <button style={{background: "blue"}}>
-                            <FontAwesomeIcon icon={faPencil} />
-                        </button>
-                    </td>
-                    <td>
-                        <button style={{background: "red"}}>
-                            <FontAwesomeIcon icon={faRemove} />
-                        </button>
-                    </td>
-                </tr>
+                {nodeRelations.map((nodeRelation, index) => (
+                    <tr key={index}>
+                        <td>{nodeRelation.dept_id_to}</td>
+                        <td>{nodeRelation.weight}</td>
+                        <td>
+                            <button style={{background: "blue"}} onClick={handleChangeNode}>
+                                <FontAwesomeIcon icon={faPencil} />
+                            </button>
+                        </td>
+                        <td>
+                            <button style={{background: "red"}} onClick={() => handleDeleteNode(nodeRelation)}>
+                                <FontAwesomeIcon icon={faRemove} />
+                            </button>
+                        </td>
+                    </tr>
+                ))}
             </tbody>
         </table>
+        <button 
+            style={{width: "50%", background: "#AAAAAA"}}
+            onClick={handleAddNode}
+        >
+            +
+        </button>
     </div>
 }

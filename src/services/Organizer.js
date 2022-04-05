@@ -17,8 +17,6 @@ const validate = (information, requiredStructure) => {
 }
 
 const getImportanceTable = (nodes, relations) => {
-    console.log(nodes)
-    console.log(relations)
     const importanceTable = []
 
     // Initialize total weight value
@@ -50,7 +48,6 @@ const isNodeCompatibleToLevel = (node, level) => {
 }
 
 const sortRequiredStructure = (structure) => {
-    console.log(structure)
     const TOTAL_LEVEL_COUNT = structure.length
     let currentPoint = Math.round(TOTAL_LEVEL_COUNT/2)
     let sortedStructure = []
@@ -87,7 +84,6 @@ const sort = (importanceInformation, p_requiredStructure) => {
         let incLimit = requiredStructure.length
         while (nodes[0]) {
             let currentNode = nodes[0]
-            // console.log(currentNode, currentLevel, inc, incLimit)
             if (isNodeCompatibleToLevel(currentNode, currentLevel)) {
                 currentLevel.currentPeopleCount += currentNode.peopleCount
                 currentNode.level = currentLevel.level

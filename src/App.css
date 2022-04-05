@@ -77,7 +77,7 @@ h2 {
 }
 
 .overlay-panel > div {
-    background-color: red;
+    background-color: rgba(0, 0, 0, 0.315);
     flex-grow: 1;
 }
 

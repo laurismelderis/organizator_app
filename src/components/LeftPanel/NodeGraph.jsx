@@ -26,57 +26,28 @@ const selected = "red",
       unselected = "silver";
 
 const defaultOptions = {
-    layout: {
-      improvedLayout: false,
-      randomSeed: 1
-    },
-    physics: {
-      stabilization: {
-        iterations: 2
-      },
-      barnesHut: {
-        gravitationalConstant: -23910,
-        centralGravity: 1.1,
-        springLength: 145,
-        springConstant: 0.095,
-        damping: 0.63,
-        avoidOverlap: 0
-      },
-      minVelocity: 0.75
-    },
-    nodes: {
-      shape: "dot",
-      size: 30,
-      font: {
-        size: 12,
-        color: "#ffffff",
-        face: "GothamSSm-Book, helvetica, arial, sans"
-      },
-      borderWidth: 2
-    },
-    edges: {
-      width: 2,
-      color: "#fff",
-      smooth: { type: "continuous" }
-    },
-    // groups: {
-    //   enablingSelected: {
-    //     color: selected
-    //   },
-    //   terminalSelected: {
-    //     color: selected
-    //   },
-    //   skillSelected: {
-    //     color: selected
-    //   },
-    //   roleSelected: {
-    //     color: selected
-    //   },
-    //   enabling: { color: unselected },
-    //   terminal: { color: unselected },
-    //   skill: { color: unselected }
-    // }c
-  };
+        layout: {
+            improvedLayout: false,
+            randomSeed: 1
+        },
+        physics: {
+            enabled: false
+        },
+        // nodes: {
+        //     shape: "dot",
+        //     size: 30,
+        //     font: {
+        //         size: 12,
+        //         color: "#ffffff",
+        //         face: "GothamSSm-Book, helvetica, arial, sans"
+        //     },
+        //     borderWidth: 2
+        // },
+        edges: {
+            width: 2,
+            smooth: { type: "continuous" }
+        },
+    };
 
 export default function NodeGraph(props) {
     let dispatch = useDispatch();
