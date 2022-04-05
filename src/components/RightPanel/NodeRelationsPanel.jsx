@@ -27,7 +27,7 @@ export default function NodeRelationsPanel(props) {
             style={{
                 position: 'absolute',
                 right: '1em',
-                top: '1em',
+                top: '4em',
             }}>Atpakaļ</button>
         <h1>{nodeId}</h1>
         <h2>Cilvēku skaits: {peopleCount}</h2>
@@ -45,9 +45,9 @@ export default function NodeRelationsPanel(props) {
             </thead>
             <tbody>
                 <tr>
-                    <td><input type="text" value="d_1" /></td>
-                    <td><input type="text" value="d_2" /></td>
-                    <td><input type="text" value="5" /></td>
+                    <td><input type="text" readOnly={true} value="d_1" /></td>
+                    <td><input type="text" readOnly={true} value="d_2" /></td>
+                    <td><input type="text" readOnly={true} value="5" /></td>
                     <td>
                         <button style={{background: "blue"}}>
                             <FontAwesomeIcon icon={faPencil} />

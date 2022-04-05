@@ -14,6 +14,9 @@
     padding: 0.875em 1em;
     text-decoration: none;
 }
+.navbar_right {
+    float: right;
+}
 
 .dropdown {
     float: left;

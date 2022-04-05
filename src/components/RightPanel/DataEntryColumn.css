@@ -21,5 +21,6 @@
     font-size: 10pt;
 }
 .data-entry-column_table > table {
+    width: 100%;
     overflow: visible;
 }

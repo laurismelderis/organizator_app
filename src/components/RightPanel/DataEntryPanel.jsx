@@ -1,12 +1,9 @@
-import React, { useCallback } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React from 'react'
+import { useSelector } from 'react-redux'
 
 import { mergeClassNames } from '../../utils'
 
 import FileType from '../../constants/fileType'
-import Organizer from '../../services/Organizer'
-
-import { setGraphEdges, setGraphNodes, setNodes, setOverlayPanelVisible } from '../../state/actions'
 
 import "./DataEntryPanel.css"
 import DataEntryColumn from './DataEntryColumn'
@@ -14,69 +11,12 @@ import RadioGroup from '../common/RadioGroup'
 
 export default function DataEntryPanel(props) {
     const className = mergeClassNames(props.className, "data-entry-panel")
-    const dispatch = useDispatch()
-    // const overlayPanelVisible = useSelector((state) => state.showOverlayPanel)
-    const showOverlay = useCallback(() => {
-        dispatch(setOverlayPanelVisible(true))
-    }, [dispatch])
-
-    // const state = useSelector(state => state)
     
-    const relations = useSelector(state => state.relations)
-    const nodes = useSelector(state => state.nodes)
-    const requiredStructure = useSelector(state => state.requiredStructure)
+    const [relations, nodes, requiredStructure] =
+        useSelector(state => [state.relations, state.nodes, state.requiredStructure])
     
-    const relationsValid = useSelector(state => state.relationsValid)
-    const nodesValid = useSelector(state => state.nodesValid)
-    const requiredStructureValid = useSelector(state => state.requiredStructureValid)
-
-    const runAlgorithm = () => {
-        if (relations[0] && nodes[0] && requiredStructure[0]) {
-            const importanceTable = Organizer.getImportanceTable(nodes, relations)
-            const sortedNodeTable = Organizer.sort(importanceTable, requiredStructure)
-
-            // Update nodes levels
-            let newNodes = []
-            sortedNodeTable.sortedNodes.forEach(node => 
-                newNodes.push({
-                    id: node.id,
-                    peopleCount: node.peopleCount,
-                    level: node.level,
-                })
-            )
-            dispatch(setNodes(newNodes))
-
-            // Set graph nodes
-            let graphNodes = []
-            sortedNodeTable.sortedNodes.forEach(currentNode => {
-                graphNodes.push({ 
-                    id: currentNode.id,
-                    label: currentNode.id,
-                    color: Organizer.getColor(currentNode.level),
-                    level: currentNode.level,
-                })
-            })
-            dispatch(setGraphNodes(graphNodes))
-
-            // Set graph edges
-            let graphEdges = []
-            relations.forEach(relation => {
-                graphEdges.push({
-                    smooth: {
-                        enabled: true,
-                        type: "dynamic",
-                        roundness: 1,
-                    },
-                    from: relation.dept_id_from,
-                    to: relation.dept_id_to,
-                    label: relation.weight.toString(),
-                    color: graphNodes.find(node => node.label === relation.dept_id_from).color
-                })
-            })
-            dispatch(setGraphEdges(graphEdges))
-            showOverlay()
-        }
-    }
+    const [relationsValid, nodesValid, requiredStructureValid] =
+        useSelector(state => [state.relationsValid, state.nodesValid, state.requiredStructureValid])
 
     return (
         <div className={className}>
@@ -107,12 +47,8 @@ export default function DataEntryPanel(props) {
                 />
             </div>
             <div className="data-entry-accessories">
-                <div>
-                    <RadioGroup />
-                </div>
-                <div>
-                    <button onClick={runAlgorithm}>Izpildīt algoritmu</button>
-                </div>
+                <RadioGroup className="data-entry_settings" />
+                <div/>
             </div>
         </div>
     )

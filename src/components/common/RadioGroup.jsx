@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setOptimizedGraph, setHierarchicalGraph } from '../../state/actions.js'
 
-function RadioGroup() {
+function RadioGroup(props) {
     const isOptimized = useSelector((state) => state.optimizedGraph)
     const isHierarchical = useSelector((state) => state.hierarchicalGraph)
     const dispatch = useDispatch()
@@ -14,17 +14,19 @@ function RadioGroup() {
         dispatch(setHierarchicalGraph(event.target.checked))
     }, [dispatch]);
     return (
-        <div>
+        <div className={props.className}>
             <label className="input-group">
                 <input type="checkbox"
                     checked={isOptimized}
                     onChange={setOptimized} />
+                {' '}
                 Optimizēts skats
             </label>
             <label className="input-group">
                 <input type="checkbox"
                     checked={isHierarchical}
                     onChange={setHierarchical} />
+                {' '}
                 Hierarhisks skats
             </label>
         </div>
