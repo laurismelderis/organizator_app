@@ -25,8 +25,6 @@ export default function DataEntryPanel(props) {
         })
     }
 
-    console.log(nodes)
-
     return (
         <div className={className}>
             <div className="data-entry-columns">

@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 const validate = (information, requiredStructure) => {
     // Calculate total capacity of structure
     let totalCapacity = 0
@@ -66,24 +68,40 @@ const sortRequiredStructure = (structure) => {
 
 const sort = (importanceInformation, p_requiredStructure) => {
     let nodes = []
+    let sortedNodes = []
     let unsortedNodes = []
     for (let i = 0; i < importanceInformation.length; i++) {
-        nodes.push(importanceInformation[i])
+        // Put the forced nodes in sortedNodes array
+        if (importanceInformation[i].forced === true) {
+            sortedNodes.push(importanceInformation[i])
+        } else {
+            nodes.push({ ...importanceInformation[i], level: 0})
+        }
     }
-
     // Validate whether current structure is compatible
     // with the node information
     if (validate(importanceInformation, p_requiredStructure)) {
-        let sortedNodes = []
         let requiredStructure = []
         p_requiredStructure.forEach(level => requiredStructure.push({ ...level, currentPeopleCount: 0}))
+        requiredStructure.forEach(level => {
+            const sortedNodesLevels = _.map(sortedNodes, 'level')
+            if (sortedNodesLevels.includes(level.level)) {
+                level.currentPeopleCount = _.sumBy(sortedNodes.filter(node => node.level === level.level), 'peopleCount')
+            }
+        })
         requiredStructure = sortRequiredStructure(requiredStructure)
-
         let currentLevel = requiredStructure[0]
         let inc = 1
         let incLimit = requiredStructure.length
         while (nodes[0]) {
             let currentNode = nodes[0]
+            if (inc > incLimit) {
+                unsortedNodes.push(currentNode)
+                nodes.shift()
+                currentLevel = requiredStructure[0]
+                inc = 1
+                continue
+            } 
             if (isNodeCompatibleToLevel(currentNode, currentLevel)) {
                 currentLevel.currentPeopleCount += currentNode.peopleCount
                 currentNode.level = currentLevel.level
@@ -94,12 +112,6 @@ const sort = (importanceInformation, p_requiredStructure) => {
             } else {
                 currentLevel = requiredStructure[inc]
                 inc++
-                if (inc > incLimit) {
-                    unsortedNodes.push(currentNode)
-                    nodes.shift()
-                    currentLevel = requiredStructure[0]
-                    inc = 1
-                }
             }
         }
         return { sortedNodes, unsortedNodes}

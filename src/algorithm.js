@@ -5,7 +5,6 @@ import { isEmpty } from 'lodash'
 export default function runAlgorithm(dispatch, relations, nodes, requiredStructure, setIsAlgoSuccessful) {
     setIsAlgoSuccessful(null)
     if (relations[0] && nodes[0] && requiredStructure[0]) {
-        nodes.map((node) => node.level = 0)
         const importanceTable = Organizer.getImportanceTable(nodes, relations)
         const sortedNodeTable = Organizer.sort(importanceTable, requiredStructure)
 
@@ -17,6 +16,7 @@ export default function runAlgorithm(dispatch, relations, nodes, requiredStructu
                 id: node.id,
                 peopleCount: node.peopleCount,
                 level: node.level,
+                forced: node.forced
             })
         )
         sortedNodeTable.unsortedNodes.forEach(node => 
@@ -24,6 +24,7 @@ export default function runAlgorithm(dispatch, relations, nodes, requiredStructu
                 id: node.id,
                 peopleCount: node.peopleCount,
                 level: node.level,
+                forced: node.forced
             })
         )
         dispatch(setNodes(newNodes))
@@ -34,7 +35,8 @@ export default function runAlgorithm(dispatch, relations, nodes, requiredStructu
             unsortedNodes.push({
                 id: unsortedNode.id,
                 peopleCount: unsortedNode.peopleCount,
-                level: unsortedNode.level
+                level: unsortedNode.level,
+                forced: unsortedNode.forced
             })    
         )
         dispatch(setUnsortedNodes(unsortedNodes))

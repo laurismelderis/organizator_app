@@ -7,7 +7,7 @@ import ReadOnlyRow from '../common/ReadOnlyRow'
 import EditableRow from '../common/EditableRow'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPencil, faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { faPencil, faChevronDown, faLock, faUnlock } from '@fortawesome/free-solid-svg-icons'
 
 export default function NodeRelationsPanel(props) {
     const dispatch = useDispatch();
@@ -19,8 +19,9 @@ export default function NodeRelationsPanel(props) {
     const nodeId = useSelector(state => state.selectedGraphNodeId)
     const nodes = useSelector(state => state.nodes)
     
-    const peopleCount = nodes.find(node => node.id === nodeId).peopleCount
-    const level = nodes.find(node => node.id === nodeId).level
+    const currentNode = nodes.find(node => node.id === nodeId)
+    const { peopleCount, level, forced } = currentNode
+
     
     const relations = useSelector(state => state.relations)
     const [nodeRelations, setNodeRelations] = useState(
@@ -42,6 +43,7 @@ export default function NodeRelationsPanel(props) {
 
     const [isNodeAscending, setIsNodeAscending] = useState(true)
     const [isWeightAscending, setIsWeightAscending] = useState(true)
+    const [isForced, setIsForced] = useState(forced)
 
     const handleAddNode = () => {
         const newRelations = cloneDeep(relations)
@@ -182,6 +184,14 @@ export default function NodeRelationsPanel(props) {
         setIsEditingLevel(false)
     }
 
+    const handleForcedClick = () => {
+        const newNodes = cloneDeep(nodes)
+        const editNode = newNodes.find(node => node.id === nodeId)
+        editNode.forced = !forced
+
+        dispatch(setNodes(newNodes))
+    }
+
     const levelCurrentPeopleCount = _.sumBy(nodes.filter(node => node.level ===  level), 'peopleCount')
     const levelCapacity = level 
         ? requiredStructure.find(structure => structure.level === level).capacity
@@ -243,6 +253,15 @@ export default function NodeRelationsPanel(props) {
                         <button onClick={handleIsEditingLevel}>
                             <FontAwesomeIcon icon={faPencil}/>
                         </button>
+                        {" "}
+                        {forced 
+                            ? <button style={{background: "#FF3333"}} onClick={handleForcedClick}>
+                                <FontAwesomeIcon icon={faLock}/>
+                            </button>
+                            : <button style={{background: "#2FD42F"}} onClick={handleForcedClick}>
+                                <FontAwesomeIcon icon={faUnlock}/>
+                            </button>
+                        }
                     </>
                 }
                 {" "}
