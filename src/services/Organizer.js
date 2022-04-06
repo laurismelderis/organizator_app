@@ -108,12 +108,12 @@ const sort = (importanceInformation, p_requiredStructure) => {
 }
 
 const getColor = (level) => {
-    const colors = ['#FF0000', '#FF8000', '#FFFF00',
+    const colors = ['#EEEEEE', '#FF8000', '#FFFF00',
                     '#80FF00', '#00FF00', '#00FFFF',
                     '#0080FF', '#0000FF', '#7F00FF',
                     '#FF00FF', '#FF007F', '#808080']
 
-    return colors[level] || '#FFFFFF'
+    return colors[level] || '#AAAAAA'
 }
 
 const Organizer = {

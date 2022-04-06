@@ -14,9 +14,6 @@
     padding: 0.875em 1em;
     text-decoration: none;
 }
-.navbar_right {
-    float: right;
-}
 
 .dropdown {
     float: left;
@@ -61,4 +58,33 @@
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+.navbar button {
+    float: left;
+    font-size: 1em;
+    color: white;
+    background: none;
+    text-align: center;
+    padding: 0.875em 1em;
+    text-decoration: none;
+}
+
+.navbar_right {
+    display: flex;
+    float: right;
+}
+
+.navbar_right .algo-success {
+    font-size: 1em;
+    padding: 0.875em 1em;
+    background: rgb(47, 212, 47);
+    text-align: center;
+}
+
+.navbar_right .algo-failed {
+    font-size: 1em;
+    padding: 0.875em 1em;
+    background: rgb(255, 51, 51);
+    text-align: center;
 }

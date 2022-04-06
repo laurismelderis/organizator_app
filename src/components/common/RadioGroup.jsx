@@ -15,13 +15,13 @@ function RadioGroup(props) {
     }, [dispatch]);
     return (
         <div className={props.className}>
-            <label className="input-group">
+            {/* <label className="input-group">
                 <input type="checkbox"
                     checked={isOptimized}
                     onChange={setOptimized} />
                 {' '}
                 Optimizēts skats
-            </label>
+            </label> */}
             <label className="input-group">
                 <input type="checkbox"
                     checked={isHierarchical}

@@ -15,7 +15,7 @@ export default function ChooseXLSFile(props) {
     const getFileTypeName = (type) => {
         if (type === FileType.NODES) return "attiecību"
         if (type === FileType.NODE_INFORMATION) return "struktūrvienību"
-        if (type === FileType.NODE_STRUCTURE_REQUIREMENTS) return "struktūras"
+        if (type === FileType.NODE_STRUCTURE_REQUIREMENTS) return "stāvu"
     }
 
     const uploadFile = useCallback((fileType) => {
@@ -75,17 +75,27 @@ export default function ChooseXLSFile(props) {
             if (p_fileType === FileType.NODES) {
                 const nodeHeaders = ['dept_id_from', 'dept_id_to', 'weight']
                 if (isEqual(currentHeaders, nodeHeaders)) {
+                    data.map((item, index) => item.id = index+1)
                     dispatch(setRelations(data))
                 } else {
+                    dispatch(setRelations([]))
                     dispatch(setRelationsValid({ error: ERROR_CODE.WRONG_TEMPLATE }))
                     return
                 }
             }
             if (p_fileType === FileType.NODE_INFORMATION) {
-                const nodeInformationHeaders = ['id', 'peopleCount', 'level']
+                const nodeInformationHeaders = ['id', 'peopleCount', 'level', 'forced']
                 if (isEqual(currentHeaders, nodeInformationHeaders)) {
+                    data.map((item) => {
+                        if (item.forced === 'y') {
+                            item.forced = true
+                        } else {
+                            item.forced = false
+                        }
+                    })
                     dispatch(setNodes(data))
                 } else {
+                    dispatch(setNodes([]))
                     dispatch(setNodesValid({ error: ERROR_CODE.WRONG_TEMPLATE }))
                     return
                 }
@@ -93,8 +103,10 @@ export default function ChooseXLSFile(props) {
             if (p_fileType === FileType.NODE_STRUCTURE_REQUIREMENTS) {
                 const requiredStructureHeaders = ['level', 'capacity']
                 if (isEqual(currentHeaders, requiredStructureHeaders)) {
+                    data.map((item) => {item.peopleCount = 0})
                     dispatch(setRequiredStructure(data))
                 } else {
+                    dispatch(setRequiredStructure([]))
                     dispatch(setRequiredStructureValid({ error: ERROR_CODE.WRONG_TEMPLATE }))
                     return
                 }
@@ -108,7 +120,7 @@ export default function ChooseXLSFile(props) {
                 className="choose-file-btn"
                 onClick={() => uploadFile(props.fileType)}
             >
-                Izvēlies {getFileTypeName(props.fileType)} failu
+                Izvēlēties {getFileTypeName(props.fileType)} failu
             </button>
             <input
                 id={"chooseXLSFile_"+props.fileType}

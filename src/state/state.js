@@ -14,8 +14,6 @@ function createInitialState() {
         nodes: [],
         unsortedNodes: [],
         requiredStructure: [],
-        graphNodes: [],
-        graphEdges: [],
     }
 }
 
@@ -51,12 +49,6 @@ export function reducer(state = createInitialState(), action) {
             }
             case A.SET_REQUIRED_STRUCTURE: {
                 return { ...state, requiredStructure: action.requiredStructure }
-            }
-            case A.SET_GRAPH_NODES: {
-                return { ...state, graphNodes: action.graphNodes }
-            }
-            case A.SET_GRAPH_EDGES: {
-                return { ...state, graphEdges: action.graphEdges }
             }
             case A.GRAPH_NODE_SELECTED: {
                 return { ...state, selectedGraphNodeId: action.nodeId }

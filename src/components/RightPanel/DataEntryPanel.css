@@ -76,3 +76,11 @@
 .right-lower-container>* {
     border: 0.0625em solid black;
 }
+
+.compatible {
+    color: rgb(47, 212, 47);
+}
+
+.incompatible {
+    color: rgb(255, 51, 51);
+}

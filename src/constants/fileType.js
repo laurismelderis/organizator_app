@@ -10,7 +10,7 @@ export function nameForType(type) {
     switch (type) {
         case FileType.NODES: return "Attiecības"
         case FileType.NODE_INFORMATION: return "Struktūrvienības"
-        case FileType.NODE_STRUCTURE_REQUIREMENTS: return "Struktūra"
+        case FileType.NODE_STRUCTURE_REQUIREMENTS: return "Stāvi"
         default: throw new Error(`Invalid type: ${type}`)
     }
 }

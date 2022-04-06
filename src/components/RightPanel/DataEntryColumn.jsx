@@ -24,8 +24,7 @@ function DataEntryColumn(props) {
                 <ScrollableTable 
                     headings={data.headings}
                     body={data.body}
-                    // headings={DUMMY_DATA.headings}
-                    // body={DUMMY_DATA.body}
+                    fileType={fileType}
                 />
             </div>
             <Signalizer text={nameForType(fileType)}

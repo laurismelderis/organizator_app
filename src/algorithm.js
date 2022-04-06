@@ -1,10 +1,14 @@
-import { setNodes, setGraphNodes, setGraphEdges, setOverlayPanelVisible, setUnsortedNodes } from './state/actions'
+import { setNodes, setOverlayPanelVisible, setUnsortedNodes } from './state/actions'
 import Organizer from './services/Organizer'
+import { isEmpty } from 'lodash'
 
-export default function runAlgorithm(dispatch, relations, nodes, requiredStructure) {
+export default function runAlgorithm(dispatch, relations, nodes, requiredStructure, setIsAlgoSuccessful) {
+    setIsAlgoSuccessful(null)
     if (relations[0] && nodes[0] && requiredStructure[0]) {
+        nodes.map((node) => node.level = 0)
         const importanceTable = Organizer.getImportanceTable(nodes, relations)
         const sortedNodeTable = Organizer.sort(importanceTable, requiredStructure)
+
 
         // Update nodes levels
         let newNodes = []
@@ -35,36 +39,15 @@ export default function runAlgorithm(dispatch, relations, nodes, requiredStructu
         )
         dispatch(setUnsortedNodes(unsortedNodes))
 
-        // Set graph nodes
-        let graphNodes = []
-        sortedNodeTable.sortedNodes.forEach(currentNode => {
-            graphNodes.push({ 
-                id: currentNode.id,
-                label: currentNode.id,
-                color: Organizer.getColor(currentNode.level),
-                level: currentNode.level,
-            })
-        })
-        dispatch(setGraphNodes(graphNodes))
+        if (!isEmpty(unsortedNodes)) {
+            dispatch(setOverlayPanelVisible(true))
+        } else {
+            dispatch(setOverlayPanelVisible(false))
+        }
 
-        // Set graph edges
-        let graphEdges = []
-        relations.forEach(relation => {
-            const graphNode = graphNodes.find(node => node.label === relation.dept_id_from)
-            graphEdges.push({
-                id: [relation.dept_id_from, relation.dept_id_to].join("~~~"),
-                from: relation.dept_id_from,
-                to: relation.dept_id_to,
-                // label: relation.weight.toString(),
-                color: {
-                    color: graphNode ? graphNode.color : '#AAAAAA',
-                    opacity: 1.0,
-                },
-            })
-        })
-        dispatch(setGraphEdges(graphEdges))
-
-        // TODO
-        dispatch(setOverlayPanelVisible(true))
+        setIsAlgoSuccessful(true)
+    } else {
+        setIsAlgoSuccessful(false)
     }
+    
 }
