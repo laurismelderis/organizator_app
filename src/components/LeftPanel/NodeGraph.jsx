@@ -32,7 +32,9 @@ export default function NodeGraph(props) {
         }
     }, [dispatch])
 
+    
     const [relations, nodes] = useSelector(state =>  [state.relations, state.nodes])
+    console.log(relations)
 
     const graphNodes = () => {
         let graphNodes = []
@@ -49,18 +51,22 @@ export default function NodeGraph(props) {
 
     const graphEdges = () => {
         let graphEdges = []
-        relations.forEach(relation => {
-            const graphNode = graphNodes().find(node => node.id === relation.dept_id_from)
-            graphEdges.push({
-                id: [relation.dept_id_from, relation.dept_id_to].join("~~~"),
-                from: relation.dept_id_from,
-                to: relation.dept_id_to,
-                color: {
-                    color: graphNode ? graphNode.color : '#AAAAAA',
-                    opacity: 1.0,
-                },
+        if (relations[0]) {
+            relations.forEach(relation => {
+                const graphNode = graphNodes().find(node => node.id === relation.dept_id_from)
+                if (relation.dept_id_to && relation.dept_id_from) {
+                    graphEdges.push({
+                        id: [relation.dept_id_from, relation.dept_id_to].join("~~~"),
+                        from: relation.dept_id_from,
+                        to: relation.dept_id_to,
+                        color: {
+                            color: graphNode ? graphNode.color : '#AAAAAA',
+                            opacity: 1.0,
+                        },
+                    })
+                }
             })
-        })
+        }
         return graphEdges
     }
 

@@ -41,20 +41,22 @@ function ScrollableTable(props) {
                 </tr>
             </thead>
             <tbody>
-                {body.map((row, rIndex) => {
-                    return (
-                        <tr key={rIndex}>
-                            {Object.values(row).map((item, iIndex) => (
-                                <td key={rIndex+iIndex}>
-                                    {item === true
-                                        ? <span>O</span>
-                                        : item
-                                    }
-                                </td>
-                            ))}
-                        </tr>
-                    )
-                })}
+                {body[0]
+                    ? body.map((row, rIndex) => {
+                        return (
+                            <tr key={rIndex}>
+                                {Object.values(row).map((item, iIndex) => (
+                                    <td key={rIndex+iIndex}>
+                                        {item === true
+                                            ? <span>O</span>
+                                            : item
+                                        }
+                                    </td>
+                                ))}
+                            </tr>
+                        )})
+                    : null
+                }
             </tbody>
         </table>
     )
