@@ -24,9 +24,7 @@ export default function NodeRelationsPanel(props) {
 
     
     const relations = useSelector(state => state.relations)
-    const [nodeRelations, setNodeRelations] = useState(
-        relations.filter(relation => relation.dept_id_from === nodeId)
-    )
+    let nodeRelations = relations.filter(relation => relation.dept_id_from === nodeId)
     
     const requiredStructure = useSelector(state => state.requiredStructure)
     
@@ -35,22 +33,24 @@ export default function NodeRelationsPanel(props) {
         dept_id_to: "",
         weight: 0,
     })
+    
     const [editPeopleCountData, setEditPeopleCountData] = useState(peopleCount)
     const [editNodeId, setEditNodeId] = useState(null)
     const [editPeopleCount, setEditPeopleCount] = useState(false)
     const [isEditingLevel, setIsEditingLevel] = useState(false)
     const [editLevel, setEditLevel] = useState(level)
 
-    const [isNodeAscending, setIsNodeAscending] = useState(true)
-    const [isWeightAscending, setIsWeightAscending] = useState(true)
-    const [isForced, setIsForced] = useState(forced)
+    // const [isNodeAscending, setIsNodeAscending] = useState(true)
+    // const [isWeightAscending, setIsWeightAscending] = useState(true)
+    const [isAscending, setIsAscending] = useState(null)
+    const [colAttribute, setColAttribute] = useState(null)
 
     const handleAddNode = () => {
         const newRelations = cloneDeep(relations)
         const lastId = _.max(_.map(relations, 'id'))
         newRelations.push({dept_id_from: nodeId, dept_id_to: "", weight: 0, id: lastId + 1})
         dispatch(setRelations(newRelations))
-        setNodeRelations(newRelations.filter(relation => relation.dept_id_from === nodeId))
+        setIsAscending(null)
     }
 
     const handleEditClick = (event, nodeRelation) => {
@@ -124,7 +124,6 @@ export default function NodeRelationsPanel(props) {
 
         newRelations[index] = editedNode
         dispatch(setRelations(newRelations))
-        setNodeRelations(newRelations.filter(relation => relation.dept_id_from === nodeId))
         setEditNodeId(null)
     }
 
@@ -141,7 +140,6 @@ export default function NodeRelationsPanel(props) {
             id: nodeRelation.id,
         })
         dispatch(setRelations(updatedRelations))
-        setNodeRelations(updatedRelations.filter(relation => relation.dept_id_from === nodeId))
     }
 
     const handleEditPeopleCount = () => {
@@ -196,6 +194,12 @@ export default function NodeRelationsPanel(props) {
     const levelCapacity = level 
         ? requiredStructure.find(structure => structure.level === level).capacity
         : "?"
+
+    if (isAscending === true && colAttribute !== null) {
+        nodeRelations = _.orderBy(nodeRelations, (a) => a[colAttribute], ['asc'])
+    } else if (isAscending === false && colAttribute !== null) {
+        nodeRelations = _.orderBy(nodeRelations, (a) => a[colAttribute], ['desc'])
+    }
     
     return (
         <div className={props.className}>
@@ -273,14 +277,8 @@ export default function NodeRelationsPanel(props) {
                     <tr>
                         <th
                             onClick={() => {
-                                if (nodeRelations[0]) {
-                                    if (isNodeAscending) {
-                                        setNodeRelations(_.orderBy(nodeRelations, (a) => a['dept_id_to'], ['asc']))
-                                    } else {
-                                        setNodeRelations(_.orderBy(nodeRelations, (a) => a['dept_id_to'], ['desc']))
-                                    }
-                                }
-                                setIsNodeAscending(!isNodeAscending)
+                                setColAttribute('dept_id_to')
+                                setIsAscending(isAscending === null ? true : !isAscending)
                             }}
                             style={{ cursor: "pointer" }}
                         >
@@ -288,14 +286,8 @@ export default function NodeRelationsPanel(props) {
                         </th>
                         <th
                             onClick={() => {
-                                if (nodeRelations[0]) {
-                                    if (isWeightAscending) {
-                                        setNodeRelations(_.orderBy(nodeRelations, (a) => a['weight'], ['asc']))
-                                    } else {
-                                        setNodeRelations(_.orderBy(nodeRelations, (a) => a['weight'], ['desc']))
-                                    }
-                                }
-                                setIsWeightAscending(!isWeightAscending)
+                                setColAttribute('weight')
+                                setIsAscending(isAscending === null ? true : !isAscending)
                             }}
                             style={{ cursor: "pointer" }}
                         >

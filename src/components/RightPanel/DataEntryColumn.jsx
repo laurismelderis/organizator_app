@@ -20,22 +20,22 @@ function DataEntryColumn(props) {
     })
 
     const handleAddData = () => {
-        // if (fileType === FileType.NODES) {
-        //     const newData = _.cloneDeep(data) || []
-        //     let newId
-        //     if (newData.body[0]) {
-        //         newId = _.max(_.map(data, 'id')) + 1
-        //     } else {
-        //         newId = 1
-        //     }
-        //     newData.body.push({
-        //         dept_id_from: '',
-        //         dept_id_to: '',
-        //         weight: 0,
-        //         id: newId
-        //     })
-        //     dispatch(setRelations(newData))
-        // }
+        if (fileType === FileType.NODES) {
+            const newData = _.cloneDeep(data.body) || []
+            let newId
+            if (newData[0]) {
+                newId = _.max(_.map(newData, 'id')) + 1
+            } else {
+                newId = 1
+            }
+            newData.push({
+                dept_id_from: '',
+                dept_id_to: '',
+                weight: 0,
+                id: newId
+            })
+            dispatch(setRelations(newData))
+        }
     }
 
     return (

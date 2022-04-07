@@ -25,6 +25,8 @@ export default function DataEntryPanel(props) {
         })
     }
 
+    // console.log(relations)
+
     return (
         <div className={className}>
             <div className="data-entry-columns">

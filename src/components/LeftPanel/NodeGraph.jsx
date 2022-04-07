@@ -34,7 +34,6 @@ export default function NodeGraph(props) {
 
     
     const [relations, nodes] = useSelector(state =>  [state.relations, state.nodes])
-    console.log(relations)
 
     const graphNodes = () => {
         let graphNodes = []
