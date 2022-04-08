@@ -2,22 +2,22 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import _ from 'lodash'
 
-function EditableRow({nodeRelations, editFormData, handleEditFormChange, handleEditFormSubmit, handleCancelClick}) {
+function EditableRow({nodeRelation, nodeRelations, editFormData, handleEditFormChange, handleEditFormSubmit, handleCancelClick}) {
     const nodes = useSelector(state => state.nodes)
     
-    let possibleNodeTo = []
+    let possibleNodesTo = []
     nodes.forEach(node => {
         if (node.id !== editFormData.dept_id_from) {
-            possibleNodeTo.push(node.id)
+            possibleNodesTo.push(node.id)
         }
     })
-    possibleNodeTo = possibleNodeTo.filter(nodeTo => {
+    possibleNodesTo = possibleNodesTo.filter(nodeTo => {
         return ! _.map(nodeRelations, "dept_id_to").includes(nodeTo)
     })
 
-    possibleNodeTo.push(nodeRelations.dept_id_to)
+    possibleNodesTo.push(nodeRelations.dept_id_to)
 
-    possibleNodeTo = _.compact(possibleNodeTo.sort())
+    possibleNodesTo = _.compact(possibleNodesTo.sort())
 
     return (
         <>
@@ -28,7 +28,7 @@ function EditableRow({nodeRelations, editFormData, handleEditFormChange, handleE
                     onChange={handleEditFormChange}
                 >
                     <option value={editFormData.dept_id_to}>{editFormData.dept_id_to}</option>
-                    {possibleNodeTo.map((nodeTo) => {
+                    {possibleNodesTo.map((nodeTo) => {
                         return <option 
                             value={nodeTo}
                             key={nodeTo}
@@ -49,7 +49,7 @@ function EditableRow({nodeRelations, editFormData, handleEditFormChange, handleE
                 />
             </td>
             <td>
-                <button type='submit' onClick={handleEditFormSubmit}>Saglabāt</button>
+                <button type='submit' onClick={(event) => handleEditFormSubmit(event, nodeRelation)}>Saglabāt</button>
             </td>
             <td>
                 <button type='submit' onClick={handleCancelClick}>Atcelt</button>

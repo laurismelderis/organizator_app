@@ -103,16 +103,20 @@ export default function NodeRelationsPanel(props) {
         setEditPeopleCount(false)
     }
 
-    const handleEditFormSubmit = (event) => {
+    const handleEditFormSubmit = (event, prevRelation) => {
         event.preventDefault()
 
         let currentWeight = parseInt(editFormData.weight)
 
         if ( ! Number.isInteger(currentWeight)) {
-            currentWeight = 0
+            alert("Attiecības svars var būt tikai vesels skaitlis!")
+            currentWeight = prevRelation.weight
         }
 
-        if (currentWeight < 0) alert("Lūdzu ievadiet svaru lielāku par 0")
+        if (currentWeight < 0) {
+            alert("Lūdzu ievadiet svaru lielāku par 0")
+            currentWeight = prevRelation.weight
+        }
 
         const editedNode = {
             dept_id_from: nodeId,
@@ -293,6 +297,7 @@ export default function NodeRelationsPanel(props) {
                         <tr key={index}>
                             {editNodeId === nodeRelation.id
                                 ? <EditableRow
+                                    nodeRelation={nodeRelation}
                                     nodeRelations={nodeRelations}
                                     editFormData={editFormData}
                                     handleEditFormChange={handleEditFormChange}

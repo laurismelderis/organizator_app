@@ -136,7 +136,7 @@ function NodesTable(props) {
 
     const handleDeleteLastClick = (event) => {
         event.preventDefault()
-        const node = nodes.pop()
+        const node = body.pop()
         deleteNode(node)
     }
 

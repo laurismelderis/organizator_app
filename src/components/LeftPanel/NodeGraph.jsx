@@ -41,7 +41,7 @@ export default function NodeGraph(props) {
         nodes.forEach(currentNode => {
             graphNodes.push({ 
                 id: currentNode.id,
-                label: (currentNode.id + '\n(' + currentNode.peopleCount + ')'),
+                label: (currentNode.id + '\n(' + currentNode.peopleCount + ') ' + `[${currentNode.level}]`),
                 color: Organizer.getColor(currentNode.level),
                 level: currentNode.level,
             })

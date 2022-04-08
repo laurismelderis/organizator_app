@@ -37,9 +37,7 @@ function DataEntryColumn(props) {
                 fileType={fileType}
                 className="data-entry-column_file-picker"
             />
-            {/* <div className="data-entry-column_table"> */}
-                {table}
-            {/* </div> */}
+            {table}
             <Signalizer text={nameForType(fileType)}
                 isGood={handleIsGood()}
                 className="data-entry-column_signalizer"

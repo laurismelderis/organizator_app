@@ -5,12 +5,10 @@ import { isEmpty } from 'lodash'
 export default function runAlgorithm(dispatch, relations, nodes, requiredStructure, setIsAlgoSuccessful) {
     setIsAlgoSuccessful(null)
 
-    // Not checking for relations because the nodes can be sorted
-    // depening on people count, i.e. the more people node have
-    // the more important the node is.
     if (nodes[0] && requiredStructure[0]) {
         const importanceTable = Organizer.getImportanceTable(nodes, relations)
         const sortedNodeTable = Organizer.sort(importanceTable, requiredStructure)
+
 
         // Update nodes levels
         let newNodes = []

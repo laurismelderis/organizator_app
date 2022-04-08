@@ -9,12 +9,12 @@ function ReadOnlyRow({ nodeRelation, handleEditClick, handleDeleteClick }) {
             <td>{nodeRelation.dept_id_to}</td>
             <td>{nodeRelation.weight}</td>
             <td>
-                <button style={{background: "blue"}} onClick={(event) => handleEditClick(event, nodeRelation) } >
+                <button onClick={(event) => handleEditClick(event, nodeRelation) } >
                     <FontAwesomeIcon icon={faPencil} />
                 </button>
             </td>
             <td>
-                <button style={{background: "red"}} onClick={(event) => handleDeleteClick(event, nodeRelation) } >
+                <button style={{background: "#FF3333"}} onClick={(event) => handleDeleteClick(event, nodeRelation) } >
                     <FontAwesomeIcon icon={faRemove} />
                 </button>
             </td>

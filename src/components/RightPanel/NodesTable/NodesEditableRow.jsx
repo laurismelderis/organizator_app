@@ -1,6 +1,7 @@
-import { faSave } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSave } from '@fortawesome/free-solid-svg-icons'
 
 function NodesEditableRow({ node, editNodeData, handleEditNodeChange, handleEditNodeSubmit, handleEditNodeCancel }) {
     return (

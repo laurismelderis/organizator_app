@@ -16,7 +16,7 @@ table thead th, table tbody td {
 }
 
 table thead th {
-    background-color: antiquewhite;
+    background-color: rgb(153, 189, 255);
 }
 
 table tbody td {
