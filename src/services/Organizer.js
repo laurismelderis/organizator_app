@@ -112,7 +112,12 @@ const getColor = (level) => {
     const colors = ['#EEEEEE', '#FF8000', '#FFFF00',
                     '#80FF00', '#00FF00', '#00FFFF',
                     '#0080FF', '#0000FF', '#7F00FF',
-                    '#FF00FF', '#FF007F', '#808080']
+                    '#FF00FF', '#FF007F', '#808080',
+                    '#FFCCCC', '#FFE5CC', '#FFFFCC',
+                    '#E5FFCC', '#CCFFCC', '#CCFFE5',
+                    '#CCFFFF', '#CCE5FF', '#CCCCFF',
+                    '#E5CCFF', '#FFCCFF', '#FFCCE5'
+                ]
 
     return colors[level] || '#AAAAAA'
 }
