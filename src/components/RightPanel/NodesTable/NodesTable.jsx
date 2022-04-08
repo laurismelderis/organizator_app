@@ -5,7 +5,7 @@ import "../DataEntryColumn.css"
 
 import _ from 'lodash'
 import { useDispatch, useSelector } from 'react-redux'
-import { setNodes } from '../../../state/actions'
+import { setNodes, setRelations } from '../../../state/actions'
 
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -131,13 +131,37 @@ function NodesTable(props) {
 
     const handleDeleteClick = (event, node) => {
         event.preventDefault()
+        deleteNode(node)
+    }
+
+    const handleDeleteLastClick = (event) => {
+        event.preventDefault()
+        const node = nodes.pop()
+        deleteNode(node)
+    }
+
+    const deleteNode = (node) => {
         const newNodes = _.cloneDeep(nodes)
 
-        
-        // let shouldDeleteWithRelations = window.confirm("Vai jūs vēlaties noņemt struktūrvienību kopā ar tā saistītajām attiecībām?")
-        // console.log(shouldDeleteWithRelations)
-        
+        const nodeHasRelations = _.some(relations, (relation) => 
+            relation.dept_id_from === node.id ||
+            relation.dept_id_to === node.id
+        )
 
+        if (nodeHasRelations) {
+            let shouldDeleteWithRelations = window.confirm("Vai jūs vēlaties noņemt struktūrvienību kopā ar tā saistītajām attiecībām?")
+            if (shouldDeleteWithRelations) {
+                const newRelations = _.cloneDeep(relations)
+                const nodeRelatedRelations = _.filter(relations, (relation) => 
+                    relation.dept_id_from === node.id ||
+                    relation.dept_id_to === node.id
+                )
+                nodeRelatedRelations.forEach(relation => {
+                    _.remove(newRelations, relation)
+                })
+                dispatch(setRelations(newRelations))
+            }
+        }
         _.remove(newNodes, node)
         dispatch(setNodes(newNodes))
     }
@@ -206,6 +230,10 @@ function NodesTable(props) {
                 style={{width:'100%', background: '#AAAAAA'}}
                 onClick={handleAddData}
             >+</button>
+            <button 
+                style={{width:'100%', background: '#FF3333'}}
+                onClick={handleDeleteLastClick}
+            >-</button>
         </>
     )
 }

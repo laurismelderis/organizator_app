@@ -4,7 +4,7 @@ import "../../common/ScrollableTable.css"
 import "../DataEntryColumn.css"
 
 import _ from 'lodash'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setRelations } from '../../../state/actions'
 
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
@@ -16,13 +16,13 @@ function RelationTable(props) {
     const classes = ['scrollable-table'].concat((props.className || '').split(' '));
 
     const headings = ["Saite no", "Saite uz", "Svars", "ID"]
-    let body = props.data.body
+    let bodyRelations = props.data.body
 
     const [colAttribute, setColAttribute] = useState(null)
     const [isAscending, setIsAscending] = useState(null)
 
     const handleAddData = () => {
-        const newData = _.cloneDeep(body) || []
+        const newData = _.cloneDeep(bodyRelations) || []
         let newId = _.max(_.map(newData, 'id')) + 1 || 1
         newData.push({
             dept_id_from: '',
@@ -34,11 +34,18 @@ function RelationTable(props) {
         setIsAscending(null)
     }
 
+    const handleDeleteLastData = () => {
+        const newRelations = _.cloneDeep(bodyRelations)
+        newRelations.pop()
+
+        dispatch(setRelations(newRelations))
+    }
+
     
     if (isAscending === true && colAttribute !== null) {
-        body = _.orderBy(body, (a) => a[colAttribute], ['asc'])
+        bodyRelations = _.orderBy(bodyRelations, (a) => a[colAttribute], ['asc'])
     } else if (isAscending === false && colAttribute !== null) {
-        body = _.orderBy(body, (a) => a[colAttribute], ['desc'])
+        bodyRelations = _.orderBy(bodyRelations, (a) => a[colAttribute], ['desc'])
     }
 
     return (
@@ -51,8 +58,8 @@ function RelationTable(props) {
                                 <th 
                                     key={index}
                                     onClick={() => {
-                                        if (body[0]) {
-                                            setColAttribute(Object.keys(body[0])[index])
+                                        if (bodyRelations[0]) {
+                                            setColAttribute(Object.keys(bodyRelations[0])[index])
                                             setIsAscending(isAscending === null ? true : !isAscending)
                                         }
                                     }}
@@ -64,8 +71,8 @@ function RelationTable(props) {
                         </tr>
                     </thead>
                     <tbody>
-                        {body[0]
-                            ? body.map((row, rIndex) => {
+                        {bodyRelations[0]
+                            ? bodyRelations.map((row, rIndex) => {
                                 return (
                                     <tr key={rIndex}>
                                         {Object.values(row).map((item, iIndex) => (
@@ -84,6 +91,10 @@ function RelationTable(props) {
                 style={{width:'100%', background: '#AAAAAA'}}
                 onClick={handleAddData}
             >+</button>
+            <button 
+                style={{width:'100%', background: '#FF3333'}}
+                onClick={handleDeleteLastData}
+            >-</button>
         </>
     )
 }
