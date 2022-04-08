@@ -3,11 +3,18 @@ import _ from 'lodash'
 const getImportanceTable = (nodes, relations) => {
     const importanceTable = []
 
+    const nodeIds = _.map(nodes, 'id')
+    const filteredRelations = _.cloneDeep(relations)
+        .filter((relation => {
+            return _.includes(nodeIds, relation.dept_id_from) ||
+            _.includes(nodeIds, relation.dept_id_to)
+        }))
+
     // Initialize total weight value
     nodes.forEach(node => importanceTable.push({...node, totalWeight: 0}))
     
     // Calculate every node total weight
-    relations.forEach(relation => {
+    filteredRelations.forEach(relation => {
         importanceTable.forEach(node => {
             if (relation.dept_id_from === node.id || relation.dept_id_to === node.id) {
                 node.totalWeight += relation.weight
@@ -20,6 +27,9 @@ const getImportanceTable = (nodes, relations) => {
         return nodeB.totalWeight - nodeA.totalWeight ||
             nodeB.peopleCount - nodeA.peopleCount
     })
+
+    // If importance table every element totalWeight is 0 then it
+    // sorts by the people count of every node and apply importance by it
 
     return importanceTable
 }

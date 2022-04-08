@@ -16,7 +16,7 @@ import NodesReadOnlyRow from './NodesReadOnlyRow'
 function NodesTable(props) {
     const dispatch = useDispatch()
 
-    const nodes = useSelector(state => state.nodes)
+    const [nodes, relations] = useSelector(state => [state.nodes, state.relations])
 
     const classes = ['scrollable-table'].concat((props.className || '').split(' '));
 
@@ -132,6 +132,12 @@ function NodesTable(props) {
     const handleDeleteClick = (event, node) => {
         event.preventDefault()
         const newNodes = _.cloneDeep(nodes)
+
+        
+        // let shouldDeleteWithRelations = window.confirm("Vai jūs vēlaties noņemt struktūrvienību kopā ar tā saistītajām attiecībām?")
+        // console.log(shouldDeleteWithRelations)
+        
+
         _.remove(newNodes, node)
         dispatch(setNodes(newNodes))
     }
