@@ -8,7 +8,6 @@ export default function runAlgorithm(dispatch, relations, nodes, requiredStructu
         const importanceTable = Organizer.getImportanceTable(nodes, relations)
         const sortedNodeTable = Organizer.sort(importanceTable, requiredStructure)
 
-
         // Update nodes levels
         let newNodes = []
         sortedNodeTable.sortedNodes.forEach(node => 
@@ -41,7 +40,7 @@ export default function runAlgorithm(dispatch, relations, nodes, requiredStructu
         )
         dispatch(setUnsortedNodes(unsortedNodes))
 
-        if (!isEmpty(unsortedNodes)) {
+        if ( ! isEmpty(unsortedNodes)) {
             dispatch(setOverlayPanelVisible(true))
         } else {
             dispatch(setOverlayPanelVisible(false))

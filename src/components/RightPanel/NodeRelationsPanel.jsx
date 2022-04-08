@@ -22,13 +22,13 @@ export default function NodeRelationsPanel(props) {
     const currentNode = nodes.find(node => node.id === nodeId)
     const { peopleCount, level, forced } = currentNode
 
-    
     const relations = useSelector(state => state.relations)
     let nodeRelations = relations.filter(relation => relation.dept_id_from === nodeId)
     
     const requiredStructure = useSelector(state => state.requiredStructure)
     
     const [editFormData, setEditFormData] = useState({
+        id: 0,
         dept_id_from: nodeId,
         dept_id_to: "",
         weight: 0,
@@ -39,15 +39,19 @@ export default function NodeRelationsPanel(props) {
     const [editPeopleCount, setEditPeopleCount] = useState(false)
     const [isEditingLevel, setIsEditingLevel] = useState(false)
     const [editLevel, setEditLevel] = useState(level)
-
-    // const [isNodeAscending, setIsNodeAscending] = useState(true)
-    // const [isWeightAscending, setIsWeightAscending] = useState(true)
+    
     const [isAscending, setIsAscending] = useState(null)
     const [colAttribute, setColAttribute] = useState(null)
 
+    const levelCurrentPeopleCount = _.sumBy(nodes.filter(node => node.level ===  level), 'peopleCount')
+    const levelStructure = requiredStructure.find(structure => structure.level === level)
+    const levelCapacity = levelStructure !== undefined
+        ? levelStructure.capacity
+        : "?"
+
     const handleAddNode = () => {
         const newRelations = cloneDeep(relations)
-        const lastId = _.max(_.map(relations, 'id'))
+        const lastId = _.max(_.map(relations, 'id')) || 1
         newRelations.push({dept_id_from: nodeId, dept_id_to: "", weight: 0, id: lastId + 1})
         dispatch(setRelations(newRelations))
         setIsAscending(null)
@@ -56,7 +60,6 @@ export default function NodeRelationsPanel(props) {
     const handleEditClick = (event, nodeRelation) => {
         event.preventDefault()
         setEditNodeId(nodeRelation.id)
-
         const formValues = {
             dept_id_from: nodeId,
             dept_id_to: nodeRelation.dept_id_to,
@@ -120,7 +123,7 @@ export default function NodeRelationsPanel(props) {
 
         const newRelations = cloneDeep(relations)
 
-        const index = relations.findIndex(node => node.id === editNodeId)
+        const index = newRelations.findIndex(node => node.id === editNodeId)
 
         newRelations[index] = editedNode
         dispatch(setRelations(newRelations))
@@ -167,13 +170,6 @@ export default function NodeRelationsPanel(props) {
             return
         }
 
-        const levelFound = requiredStructure.find(structure => structure.level === parseInt(editLevel))
-        if ( ! levelFound && parseInt(editLevel) !== 0) {
-            alert('Stāvs nepastāv')
-            handleIsEditingLevel()
-            return
-        }
-
         const newNodes = cloneDeep(nodes)
         const editNode = newNodes.find(node => node.id === nodeId)
         editNode.level = parseInt(editLevel)
@@ -189,11 +185,6 @@ export default function NodeRelationsPanel(props) {
 
         dispatch(setNodes(newNodes))
     }
-
-    const levelCurrentPeopleCount = _.sumBy(nodes.filter(node => node.level ===  level), 'peopleCount')
-    const levelCapacity = level 
-        ? requiredStructure.find(structure => structure.level === level).capacity
-        : "?"
 
     if (isAscending === true && colAttribute !== null) {
         nodeRelations = _.orderBy(nodeRelations, (a) => a[colAttribute], ['asc'])

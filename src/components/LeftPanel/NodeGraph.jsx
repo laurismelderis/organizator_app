@@ -7,18 +7,19 @@ import { graphNodeSelected, graphNodeUnselected } from "../../state/actions"
 import Organizer from "../../services/Organizer"
 
 const defaultOptions = {
-        layout: {
-            improvedLayout: false,
-            randomSeed: 1,
-        },
-        physics: {
-            enabled: false
-        },
-        edges: {
-            width: 2,
-            smooth: { type: "continuous" }
-        },
-    }
+    autoResize: true,
+    layout: {
+        improvedLayout: false,
+        randomSeed: 1,
+    },
+    physics: {
+        enabled: false
+    },
+    edges: {
+        width: 2,
+        smooth: { type: "continuous" }
+    },
+}
 
 export default function NodeGraph(props) {
     let dispatch = useDispatch()

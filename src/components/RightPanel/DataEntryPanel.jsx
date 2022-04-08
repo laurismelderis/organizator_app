@@ -33,7 +33,6 @@ export default function DataEntryPanel(props) {
                 <DataEntryColumn
                     fileType={FileType.NODES}
                     data={{
-                        headings: ["Saite no", "Saite uz", "Svars", "ID"],
                         body: relations,
                     }}
                     validationError={relationsValid}
@@ -41,7 +40,6 @@ export default function DataEntryPanel(props) {
                 <DataEntryColumn
                     fileType={FileType.NODE_INFORMATION}
                     data={{
-                        headings: ["ID", "Cilvēku sk.", "Stāvs", 'OBL'],
                         body: nodes,
                     }}
                     validationError={nodesValid}
@@ -49,7 +47,6 @@ export default function DataEntryPanel(props) {
                 <DataEntryColumn
                     fileType={FileType.NODE_STRUCTURE_REQUIREMENTS}
                     data={{
-                        headings: ["Stāvs", "Kapacitāte", "Aizpildījums"],
                         body: requiredStructure,
                     }}
                     validationError={requiredStructureValid}
