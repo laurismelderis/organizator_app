@@ -75,7 +75,12 @@ export default function ChooseXLSFile(props) {
             if (p_fileType === FileType.NODES) {
                 const nodeHeaders = ['dept_id_from', 'dept_id_to', 'weight']
                 if (isEqual(currentHeaders, nodeHeaders)) {
-                    data.map((item, index) => item.id = index+1)
+                    console.log(data)
+                    data.map((item, index) => {
+                        item.id = index+1
+                        item.weight = parseInt(item.weight)
+                    })
+                    console.log(data)
                     dispatch(setRelations(data))
                 } else {
                     dispatch(setRelations([]))
@@ -92,6 +97,8 @@ export default function ChooseXLSFile(props) {
                         } else {
                             item.forced = false
                         }
+                        item.peopleCount = parseInt(item.peopleCount)
+                        item.level = parseInt(item.level)
                     })
                     dispatch(setNodes(data))
                 } else {
@@ -103,7 +110,11 @@ export default function ChooseXLSFile(props) {
             if (p_fileType === FileType.NODE_STRUCTURE_REQUIREMENTS) {
                 const requiredStructureHeaders = ['level', 'capacity']
                 if (isEqual(currentHeaders, requiredStructureHeaders)) {
-                    data.map((item) => {item.peopleCount = 0})
+                    data.map((item) => {
+                        item.peopleCount = 0
+                        item.level = parseInt(item.level)
+                        item.capacity = parseInt(item.capacity)
+                    })
                     dispatch(setRequiredStructure(data))
                 } else {
                     dispatch(setRequiredStructure([]))

@@ -8,8 +8,7 @@ export default function runAlgorithm(dispatch, relations, nodes, requiredStructu
     if (nodes[0] && requiredStructure[0]) {
         const importanceTable = Organizer.getImportanceTable(nodes, relations)
         const sortedNodeTable = Organizer.sort(importanceTable, requiredStructure)
-
-
+        
         // Update nodes levels
         let newNodes = []
         sortedNodeTable.sortedNodes.forEach(node => 
