@@ -93,6 +93,8 @@ function RelationTable(props) {
 
         newRelations[index] = editedRelation
 
+        console.log(newRelations)
+
         dispatch(setRelations(newRelations))
         setEditRelationId(null)
     }
@@ -131,7 +133,7 @@ function RelationTable(props) {
                         <tr>
                             {headings.map((heading, index) => (
                                 <th 
-                                    key={index}
+                                    key={'h'+index}
                                     onClick={() => {
                                         if (bodyRelations[0]) {
                                             setColAttribute(Object.keys(bodyRelations[0])[index])
@@ -150,7 +152,7 @@ function RelationTable(props) {
                     <tbody>
                         {bodyRelations[0]
                             ? bodyRelations.map((relation, index) => (
-                                <tr key={index}>
+                                <tr key={'r'+index}>
                                     {relation.id === editRelationId
                                         ? <RelationEditableRow
                                             relation={relation}

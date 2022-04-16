@@ -36,6 +36,9 @@ export default function NodeGraph(props) {
     
     const [relations, nodes] = useSelector(state =>  [state.relations, state.nodes])
 
+    // console.log(relations)
+    // console.log(nodes)
+
     const graphNodes = () => {
         let graphNodes = []
         nodes.forEach(currentNode => {
@@ -54,7 +57,7 @@ export default function NodeGraph(props) {
         if (relations[0]) {
             relations.forEach(relation => {
                 const graphNode = graphNodes().find(node => node.id === relation.dept_id_from)
-                if (relation.dept_id_to && relation.dept_id_from) {
+                if (relation.dept_id_to && relation.dept_id_from && relation.dept_id_to !== "" && relation.dept_id_from !== "" ) {
                     graphEdges.push({
                         id: [relation.dept_id_from, relation.dept_id_to].join("~~~"),
                         from: relation.dept_id_from,
@@ -69,7 +72,7 @@ export default function NodeGraph(props) {
         }
         return graphEdges
     }
-
+    
     const hierarchicalGraph = useSelector(state => state.hierarchicalGraph)
 
     const selectedNodeId = useSelector(state => state.selectedGraphNodeId)

@@ -80,7 +80,6 @@ export default function ChooseXLSFile(props) {
                         item.id = index+1
                         item.weight = parseInt(item.weight)
                     })
-                    console.log(data)
                     dispatch(setRelations(data))
                 } else {
                     dispatch(setRelations([]))

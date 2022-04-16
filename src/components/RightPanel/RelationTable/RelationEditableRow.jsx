@@ -13,10 +13,12 @@ function RelationEditableRow({ relation, editRelationData, handleEditRelationCha
     let possibleNodesFrom = []
     let possibleNodesTo = []
 
+    possibleNodesFrom.push("")
+    
     nodes.forEach(node => {
         possibleNodesFrom.push(node.id)
     })
-
+    
     for (let i = 0; i < possibleNodesFrom.length; i++) {
         const copy = _.cloneDeep(possibleNodesFrom)
         const currentElement = copy.splice(i, 1)
@@ -26,9 +28,9 @@ function RelationEditableRow({ relation, editRelationData, handleEditRelationCha
             _.remove(possibleNodesFrom, (nodeFrom) => nodeFrom === currentElement[0])
         }
     }
-
+    
     possibleNodesFrom.sort()
-
+    
     if (editRelationData.dept_id_from !== "") {
         const nodeFromRelations = _.map(relations.filter(relation => relation.dept_id_from === editRelationData.dept_id_from), "dept_id_to")
         _.remove(nodeFromRelations, (nodeFrom) => nodeFrom === editRelationData.dept_id_to)
@@ -38,9 +40,10 @@ function RelationEditableRow({ relation, editRelationData, handleEditRelationCha
             }
         })
         possibleNodesTo = possibleNodesTo.filter((nodeTo) => 
-            ! _.includes(nodeFromRelations, nodeTo)
+        ! _.includes(nodeFromRelations, nodeTo)
         )
         possibleNodesTo = _.compact(possibleNodesTo.sort())
+        possibleNodesTo.unshift("")
     }
     
     return (

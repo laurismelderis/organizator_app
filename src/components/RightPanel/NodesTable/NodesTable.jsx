@@ -50,6 +50,7 @@ function NodesTable(props) {
         }
 
         newData.push(newNode)
+        console.log(newData)
         dispatch(setNodes(newData))
         setIsAscending(null)
     }
