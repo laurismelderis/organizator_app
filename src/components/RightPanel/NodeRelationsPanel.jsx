@@ -206,12 +206,12 @@ export default function NodeRelationsPanel(props) {
                 }}>Atpakaļ</button>
             <h1>{nodeId}</h1>
             <h2>
-                Cilvēku skaits:{" "}
+                Darbinieku skaits:{" "}
                 {editPeopleCount 
                     ? <>
                         <input
                             type="text"
-                            placeholder='cilv. sk.'
+                            placeholder='darb. sk.'
                             required="required"
                             name="peopleCount"
                             value={editPeopleCountData}

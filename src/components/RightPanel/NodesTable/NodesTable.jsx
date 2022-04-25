@@ -20,7 +20,7 @@ function NodesTable(props) {
 
     const classes = ['scrollable-table'].concat((props.className || '').split(' '));
 
-    const headings = ["ID", "Cilv. sk.", "Stāvs", "OBL"]
+    const headings = ["ID", "Darb. sk.", "Stāvs", "OBL"]
     let body = props.data.body
 
     const [colAttribute, setColAttribute] = useState(null)
@@ -95,7 +95,7 @@ function NodesTable(props) {
 
         // Check whether peopleCount or level are integers
         if ( ! Number.isInteger(peopleCount)) {
-            errorMsg += "Cilvēku skaitam ir jābūt veselam skaitlim. "
+            errorMsg += "Darbinieku skaitam ir jābūt veselam skaitlim. "
             peopleCount = prevNode.peopleCount
         }
         if ( ! Number.isInteger(level)) {
@@ -105,7 +105,7 @@ function NodesTable(props) {
 
         // Check whether peopleCount or level are negative integers
         if (peopleCount < 0) {
-            errorMsg += "Cilvēku skaits nedrīkst būt negatīvs. "
+            errorMsg += "Darbinieku skaits nedrīkst būt negatīvs. "
             peopleCount = prevNode.peopleCount
         }
         if (level < 0) {

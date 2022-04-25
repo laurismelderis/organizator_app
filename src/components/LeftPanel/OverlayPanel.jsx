@@ -23,7 +23,7 @@ export default function OverlayPanel() {
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Cilvēku sk.</th>
+                        <th>Darbinieku sk.</th>
                         <th>Līmenis</th>
                     </tr>
                 </thead>

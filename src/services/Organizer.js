@@ -70,8 +70,7 @@ const sort = (importanceInformation, p_requiredStructure) => {
             nodes.push({ ...importanceInformation[i], level: 0})
         }
     }
-    // Validate whether current structure is compatible
-    // with the node information
+
     let requiredStructure = []
     p_requiredStructure.forEach(level => requiredStructure.push({ ...level, currentPeopleCount: 0}))
     requiredStructure.forEach(level => {

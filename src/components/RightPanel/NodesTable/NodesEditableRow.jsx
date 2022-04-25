@@ -21,7 +21,7 @@ function NodesEditableRow({ node, editNodeData, handleEditNodeChange, handleEdit
                 <input 
                     style={{width: "90%"}}
                     type="text"
-                    placeholder='Cilv.sk.'
+                    placeholder='Darb.sk.'
                     required="required"
                     name="peopleCount"
                     value={ editNodeData.peopleCount }
