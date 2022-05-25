@@ -3,6 +3,7 @@ import FileType from '../../constants/fileType'
 import { isEqual } from 'lodash'
 
 import * as XLSX from 'xlsx'
+import _ from 'lodash'
 
 import './ChooseXLSFile.css'
 import { useDispatch } from 'react-redux'
@@ -75,12 +76,25 @@ export default function ChooseXLSFile(props) {
             if (p_fileType === FileType.NODES) {
                 const nodeHeaders = ['dept_id_from', 'dept_id_to', 'weight']
                 if (isEqual(currentHeaders, nodeHeaders)) {
-                    console.log(data)
                     data.map((item, index) => {
                         item.id = index+1
                         item.weight = parseInt(item.weight)
                     })
-                    dispatch(setRelations(data))
+                    let relations = []
+                    data.forEach(relation => {
+                        const id_from = relation.dept_id_from
+                        const id_to = relation.dept_id_to
+                        const existingRelation = _.find(relations, { dept_id_from: id_from, dept_id_to: id_to })
+                        if (existingRelation) {
+                            const currentWeight = existingRelation.weight
+                            const weight = relation.weight
+                            existingRelation.weight = Math.max(currentWeight, weight)
+                        } else {
+                            relations.push(relation)
+                        }
+                    })
+                    console.log(`Attiecības: ${relations.length}`)
+                    dispatch(setRelations(relations))
                 } else {
                     dispatch(setRelations([]))
                     dispatch(setRelationsValid({ error: ERROR_CODE.WRONG_TEMPLATE }))
