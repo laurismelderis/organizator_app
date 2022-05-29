@@ -93,7 +93,6 @@ export default function ChooseXLSFile(props) {
                             relations.push(relation)
                         }
                     })
-                    console.log(`Attiecības: ${relations.length}`)
                     dispatch(setRelations(relations))
                 } else {
                     dispatch(setRelations([]))
